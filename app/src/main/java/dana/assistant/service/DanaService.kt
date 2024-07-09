@@ -1,12 +1,9 @@
 package dana.assistant.service
 
 import android.content.Context
-import android.content.Context.RECEIVER_NOT_EXPORTED
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.Uri
-import android.os.Build
-import androidx.annotation.RequiresApi
 
 class DanaService(private val context: Context) {
 
@@ -24,16 +21,14 @@ class DanaService(private val context: Context) {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     fun registerService(callBack: AssistantCallBack, permission: String) {
         assistantReceiver = AssistantBroadcastReceiver(callBack)
-        val intentFilter = IntentFilter("dana.assistant.service")
+        val intentFilter = IntentFilter("dana.assistant.service.DETECT_COMMAND")
         context.registerReceiver(
             assistantReceiver,
             intentFilter,
             permission,
-            null,
-            RECEIVER_NOT_EXPORTED
+            null
         )
     }
 
