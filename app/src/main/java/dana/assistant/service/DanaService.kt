@@ -24,12 +24,7 @@ class DanaService(private val context: Context) {
     fun registerService(callBack: AssistantCallBack, permission: String) {
         assistantReceiver = AssistantBroadcastReceiver(callBack)
         val intentFilter = IntentFilter("dana.assistant.service.DETECT_COMMAND")
-        context.registerReceiver(
-            assistantReceiver,
-            intentFilter,
-            permission,
-            null
-        )
+        context.registerReceiver(assistantReceiver, intentFilter)
     }
 
     fun unregisterService() {
