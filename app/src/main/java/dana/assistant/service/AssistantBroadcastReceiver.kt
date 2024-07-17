@@ -3,32 +3,22 @@ package dana.assistant.service
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import dana.assistant.service.model.parseCommand
 
 internal class AssistantBroadcastReceiver(private val callBack: AssistantCallBack) :
     BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
-        val command = intent?.getStringExtra("command") ?: ""
-        val value = intent?.getStringExtra("value") ?: ""
+
+        val command = intent?.data?.getQueryParameter("command")
+            ?: intent?.getStringExtra("command") ?: ""
+
+        val values = intent?.data?.getQueryParameters("values")
+            ?: intent?.getStringArrayListExtra("values") ?: arrayListOf<String>()
+
         callBack.onReceiveCommand(
             commandType = parseCommand(command = command),
-            value = value
+            values = values.toList()
         )
     }
 
-    private fun parseCommand(command: String) = when (command) {
-        "VolumeUp" -> CommandType.VolumeUp
-        "VolumeDown" -> CommandType.VolumeDown
-        "MediaPause" -> CommandType.MediaPause
-        "MediaStop" -> CommandType.MediaStop
-        "MediaNext" -> CommandType.MediaNext
-        "MediaPrevious" -> CommandType.MediaPrevious
-        "MediaRewind" -> CommandType.MediaRewind
-        "MediaFastForward" -> CommandType.MediaFastForward
-        "MediaAudioTrack" -> CommandType.MediaAudioTrack
-        "ChangeMediaPosition" -> CommandType.ChangeMediaPosition
-        "ChangeMediaQuality" -> CommandType.ChangeMediaQuality
-        "ChangeMediaSubtitle" -> CommandType.ChangeMediaSubtitle
-        "ChangeSubtitleSize" -> CommandType.ChangeSubtitleSize
-        else -> CommandType.Unknown
-    }
 }

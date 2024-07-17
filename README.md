@@ -7,9 +7,9 @@ With this service, you can open **Dana voice assistant** on your app and receive
 
 check the latest release version in github.
 
-*2.* create an instanse of `DanaService()`
+*2.* create an instance of `DanaService()`
 and use `openAssistant(packageName : String, screenName : String)` function for open Dana overlay.<br/>
-**It's important to send your packagename for receive data with successfully**
+**It's important to send your PackageName for receive data with successfully**
 
 *3.* register service when screen created with this function:<br/>
 `registerService(object : AssistantCallBack)`
@@ -18,7 +18,7 @@ and use `openAssistant(packageName : String, screenName : String)` function for 
 
 # version 1.0.0
 ##### What's happened in this version?
-This commandes was supported:
+This commands was supported:
 - *VolumeUp*
 - *VolumeDown*
 - *MediaPause*
