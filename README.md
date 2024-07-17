@@ -23,17 +23,17 @@ This commands was supported:
 ## Commands version 1.1.0
 
 | command | group | is_internal | argument     | default_value |
-|---------|-------|-------------|--------------|----------------|
-| VolumeUp              | Player | ✅ | 1 unit 10    | 2 |
-| VolumeDown            | Player | ✅ | 1 unit 10    | 2 |
-| VolumeMute            | Player | ✅ | -            | 2 |
-| MediaNext             | Player | ✅ | -            | 2 |
-| MediaPrevious         | Player | ✅ | -            | 2 |
-| MediaRewind           | Player | ✖️ | 1 unit 36000 | 15 |
-| MediaFastForward      | Player | ✖️ | 1 unit 36000 | 15 |
-| MediaAudioTrack       | Player | ✖️ | -            | 2 |
-| MediaChangePosition   | Player | ✖️ | 1 unit 36000 | 0 |
-| MediaChangeQuality    | Player | ✖️ | -            | 2 |
-| MediaChangeSubtitle   | Player | ✖️ | -            | 2 |
-| MediaSubtitleIncrease | Player | ✖️ | -            | 2 |
-| MediaSubtitleDecrease | Player | ✖️ | -            | 2 |
+|---------|-------|-------------|--------------|---------------|
+| VolumeUp              | Player | ✅ | 1 unit 10    | 2             |
+| VolumeDown            | Player | ✅ | 1 unit 10    | 2             |
+| VolumeMute            | Player | ✅ | -            | -             |
+| MediaNext             | Player | ✅ | -            | -             |
+| MediaPrevious         | Player | ✅ | -            | -             |
+| MediaRewind           | Player | ✖️ | 1 unit 36000 | 15            |
+| MediaFastForward      | Player | ✖️ | 1 unit 36000 | 15            |
+| MediaAudioTrack       | Player | ✖️ | -            | -             |
+| MediaChangePosition   | Player | ✖️ | 1 unit 36000 | 0             |
+| MediaChangeQuality    | Player | ✖️ | -            | -             |
+| MediaChangeSubtitle   | Player | ✖️ | -            | -             |
+| MediaSubtitleIncrease | Player | ✖️ | -            | -             |
+| MediaSubtitleDecrease | Player | ✖️ | -            | -             |
