@@ -16,11 +16,12 @@ and use `openAssistant(packageName : String, screenName : String)` function for 
 
 *4.* don't forget call `unregisterService()` when screen destroyed.
 
-# version 1.1.0
+# version 1.2.0
 ##### What's happened in this version?
 This commands was supported:
+- disable allowbackup
 
-## Commands version 1.1.0
+## Commands version 1.2.0
 
 | command | group | is_internal | argument     | default_value |
 |---------|-------|-------------|--------------|---------------|
@@ -31,6 +32,26 @@ This commands was supported:
 | MediaPrevious         | Player | ✅ | -            | -             |
 | Play                  | Player | ✖️ | -            | -             |
 | Pause                 | Player | ✖️ | -            | -             |
+| MediaRewind           | Player | ✖️ | 1 unit 36000 | 15            |
+| MediaFastForward      | Player | ✖️ | 1 unit 36000 | 15            |
+| MediaAudioTrack       | Player | ✖️ | -            | -             |
+| MediaChangePosition   | Player | ✖️ | 1 unit 36000 | 0             |
+| MediaChangeQuality    | Player | ✖️ | -            | -             |
+| MediaChangeSubtitle   | Player | ✖️ | -            | -             |
+| MediaSubtitleIncrease | Player | ✖️ | -            | -             |
+| MediaSubtitleDecrease | Player | ✖️ | -            | -             |
+
+# version 1.1.0
+##### What's happened in this version?
+This commands was supported:
+
+| command | group | is_internal | argument     | default_value |
+|---------|-------|-------------|--------------|---------------|
+| VolumeUp              | Player | ✅ | 1 unit 10    | 2             |
+| VolumeDown            | Player | ✅ | 1 unit 10    | 2             |
+| VolumeMute            | Player | ✅ | -            | -             |
+| MediaNext             | Player | ✅ | -            | -             |
+| MediaPrevious         | Player | ✅ | -            | -             |
 | MediaRewind           | Player | ✖️ | 1 unit 36000 | 15            |
 | MediaFastForward      | Player | ✖️ | 1 unit 36000 | 15            |
 | MediaAudioTrack       | Player | ✖️ | -            | -             |
