@@ -24,11 +24,13 @@ This commands was supported:
 
 | command | group | is_internal | argument     | default_value |
 |---------|-------|-------------|--------------|---------------|
-| VolumeUp              | Player | ✅ | 1 unit 10    | 2             |
-| VolumeDown            | Player | ✅ | 1 unit 10    | 2             |
-| VolumeMute            | Player | ✅ | -            | -             |
+| VolumeUp              | Player | ✖️ | 1 unit 10    | 2             |
+| VolumeDown            | Player | ✖️ | 1 unit 10    | 2             |
+| VolumeMute            | Player | ✖️ | -            | -             |
 | MediaNext             | Player | ✅ | -            | -             |
 | MediaPrevious         | Player | ✅ | -            | -             |
+| Play                  | Player | ✖️ | -            | -             |
+| Pause                 | Player | ✖️ | -            | -             |
 | MediaRewind           | Player | ✖️ | 1 unit 36000 | 15            |
 | MediaFastForward      | Player | ✖️ | 1 unit 36000 | 15            |
 | MediaAudioTrack       | Player | ✖️ | -            | -             |
