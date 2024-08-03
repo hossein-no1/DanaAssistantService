@@ -1,8 +1,11 @@
 package dana.assistant.service.model
 
 enum class CommandType {
-    Play,
-    Pause,
+    VolumeUp,
+    VolumeDown,
+    VolumeMute,
+    MediaPlay,
+    MediaPause,
     MediaNext,
     MediaPrevious,
     MediaRewind,
@@ -18,8 +21,11 @@ enum class CommandType {
 }
 
 fun parseCommand(command: String) = when (command) {
-    "Play" -> CommandType.Play
-    "Pause" -> CommandType.Pause
+    "VolumeUp" -> CommandType.VolumeUp
+    "VolumeDown" -> CommandType.VolumeDown
+    "VolumeMute" -> CommandType.VolumeMute
+    "MediaPlay" -> CommandType.MediaPlay
+    "MediaPause" -> CommandType.MediaPause
     "MediaNext" -> CommandType.MediaNext
     "MediaPrevious" -> CommandType.MediaPrevious
     "MediaRewind" -> CommandType.MediaRewind
