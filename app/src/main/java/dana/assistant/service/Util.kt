@@ -25,6 +25,8 @@ internal object Util {
     }
 
     fun Context.getDanaVersionCode(): Long {
+        if (!isDanaInstalled()) return -1
+
         val danaInfo = packageManager.getPackageInfo(packageName = DANA_PACKAGE_NAME)
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) danaInfo.longVersionCode else danaInfo.versionCode.toLong()
     }
