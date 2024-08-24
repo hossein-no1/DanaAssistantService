@@ -3,32 +3,54 @@ package dana.assistant.service
 import android.annotation.TargetApi
 import android.content.Context
 import android.content.Context.RECEIVER_EXPORTED
-import android.content.Intent
 import android.content.IntentFilter
-import android.net.Uri
 import android.os.Build
+import dana.assistant.service.Util.getDanaVersionCode
+import dana.assistant.service.Util.isDanaInstalled
+import dana.assistant.service.Util.openDana
 import dana.assistant.service.model.ClientScreenType
 import dana.assistant.service.model.ClientType
+import dana.assistant.service.model.DanaScreenType
+
 
 class DanaService(private val context: Context) {
 
     private var assistantReceiver: AssistantBroadcastReceiver? = null
-    private var receiverPackageName = ""
 
     fun openAssistant(
         packageName: ClientType = ClientType.Launcher,
         screenName: ClientScreenType = ClientScreenType.Home
     ) {
-        receiverPackageName = packageName.packageName
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("app://assistant.dana.ir/?page=overlay"))
-        intent.putExtra("client_package_name", receiverPackageName)
-        intent.putExtra("current_screen", screenName.screen)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        try {
-            context.startActivity(intent)
-        } catch (e: Exception) {
-            e.printStackTrace()
+
+        if (context.isDanaInstalled()) {
+            openDana(
+                context = context,
+                danaScreenType = DanaScreenType.Overlay,
+                clientType = packageName,
+                screenType = screenName
+            )
+        } else {
+            throw AssistantException(message = "Dana is not installed on your device!")
         }
+
+    }
+
+    fun openExplorer(
+        packageName: ClientType = ClientType.Launcher,
+        screenName: ClientScreenType = ClientScreenType.Home
+    ) {
+
+        if (context.isDanaInstalled()) {
+            openDana(
+                context = context,
+                danaScreenType = DanaScreenType.Explorer,
+                clientType = packageName,
+                screenType = screenName
+            )
+        } else {
+            throw AssistantException(message = "Dana is not installed on your device!")
+        }
+
     }
 
     @TargetApi(Build.VERSION_CODES.O)
@@ -41,5 +63,9 @@ class DanaService(private val context: Context) {
     fun unregisterService() {
         context.unregisterReceiver(assistantReceiver)
     }
+
+    fun isDanaInstalled() = context.isDanaInstalled()
+
+    fun getDanaVersionCode() = context.getDanaVersionCode()
 
 }
