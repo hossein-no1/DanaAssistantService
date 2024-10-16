@@ -17,6 +17,11 @@ enum class CommandType {
     MediaSubtitleIncrease,
     MediaSubtitleDecrease,
 
+    PlayMovie,
+    PlaySerial,
+    PlayMusic,
+    OpenApplication,
+
     Unknown
 }
 
@@ -36,5 +41,9 @@ fun parseCommand(command: String) = when (command) {
     "MediaChangeSubtitle" -> CommandType.MediaChangeSubtitle
     "MediaSubtitleIncrease" -> CommandType.MediaSubtitleIncrease
     "MediaSubtitleDecrease" -> CommandType.MediaSubtitleDecrease
+    "PlayMovie" -> CommandType.PlayMovie
+    "PlaySerial" -> CommandType.PlaySerial
+    "PlayMusic" -> CommandType.PlayMusic
+    "OpenApplication" -> CommandType.OpenApplication
     else -> CommandType.Unknown
 }
