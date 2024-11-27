@@ -27,6 +27,7 @@ enum class CommandType {
     OpenSetting,
     OpenProfile,
     Shutdown,
+    Reboot,
     BackPress,
     HomePress,
 
@@ -59,6 +60,7 @@ fun parseCommand(command: String) = when (command) {
     "OpenSetting" -> CommandType.OpenSetting
     "OpenProfile" -> CommandType.OpenProfile
     "Shutdown" -> CommandType.Shutdown
+    "Reboot" -> CommandType.Reboot
     "BackPress" -> CommandType.BackPress
     "HomePress" -> CommandType.HomePress
     else -> CommandType.Unknown
