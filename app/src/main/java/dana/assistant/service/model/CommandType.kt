@@ -21,6 +21,14 @@ enum class CommandType {
     PlaySerial,
     PlayMusic,
     OpenApplication,
+    OpenWifiSetting,
+    OpenBluetoothSetting,
+    OpenLanguageSetting,
+    OpenSetting,
+    OpenProfile,
+    Shutdown,
+    BackPress,
+    HomePress,
 
     Unknown
 }
@@ -45,5 +53,13 @@ fun parseCommand(command: String) = when (command) {
     "PlaySerial" -> CommandType.PlaySerial
     "PlayMusic" -> CommandType.PlayMusic
     "OpenApplication" -> CommandType.OpenApplication
+    "OpenWifiSetting" -> CommandType.OpenWifiSetting
+    "OpenBluetoothSetting" -> CommandType.OpenBluetoothSetting
+    "OpenLanguageSetting" -> CommandType.OpenLanguageSetting
+    "OpenSetting" -> CommandType.OpenSetting
+    "OpenProfile" -> CommandType.OpenProfile
+    "Shutdown" -> CommandType.Shutdown
+    "BackPress" -> CommandType.BackPress
+    "HomePress" -> CommandType.HomePress
     else -> CommandType.Unknown
 }
