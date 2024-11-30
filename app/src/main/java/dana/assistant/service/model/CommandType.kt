@@ -1,6 +1,7 @@
 package dana.assistant.service.model
 
 enum class CommandType {
+    // Player group
     VolumeUp,
     VolumeDown,
     VolumeMute,
@@ -17,6 +18,8 @@ enum class CommandType {
     MediaSubtitleIncrease,
     MediaSubtitleDecrease,
 
+    // General group
+
     PlayMovie,
     PlaySerial,
     PlayMusic,
@@ -30,6 +33,13 @@ enum class CommandType {
     Reboot,
     BackPress,
     HomePress,
+
+    // Content-Detail group
+
+    Play,
+    Bookmark,
+    Like,
+    DisLike,
 
     Unknown
 }
@@ -63,5 +73,9 @@ fun parseCommand(command: String) = when (command) {
     "Reboot" -> CommandType.Reboot
     "BackPress" -> CommandType.BackPress
     "HomePress" -> CommandType.HomePress
+    "Play" -> CommandType.Play
+    "Bookmark" -> CommandType.Bookmark
+    "Like" -> CommandType.Like
+    "DisLike" -> CommandType.DisLike
     else -> CommandType.Unknown
 }
