@@ -9,6 +9,7 @@ import dana.assistant.service.Util.openDana
 import dana.assistant.service.model.ClientScreenType
 import dana.assistant.service.model.ClientType
 import dana.assistant.service.model.DanaScreenType
+import dana.assistant.service.model.WakeupType
 
 
 class DanaService(private val context: Context) {
@@ -17,7 +18,8 @@ class DanaService(private val context: Context) {
 
     fun openAssistant(
         packageName: ClientType = ClientType.Launcher,
-        screenName: ClientScreenType = ClientScreenType.Home
+        screenName: ClientScreenType = ClientScreenType.Home,
+        wakeupType: WakeupType = WakeupType.Microphone
     ) {
 
         if (context.isDanaInstalled()) {
@@ -25,7 +27,8 @@ class DanaService(private val context: Context) {
                 context = context,
                 danaScreenType = DanaScreenType.Overlay,
                 clientType = packageName,
-                screenType = screenName
+                screenType = screenName,
+                wakeupType = wakeupType
             )
         } else {
             throw AssistantException(message = "Dana is not installed on your device!")
