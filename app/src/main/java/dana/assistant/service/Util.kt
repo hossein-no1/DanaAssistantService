@@ -6,6 +6,7 @@ import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
+import android.util.Log
 import dana.assistant.service.model.ClientScreenType
 import dana.assistant.service.model.ClientType
 import dana.assistant.service.model.DanaScreenType
@@ -15,6 +16,10 @@ internal object Util {
 
     private const val DANA_PACKAGE_NAME = "ir.huma.voiceassistant"
     private const val LAST_DANA_VERSION_AFTER_REFACTOR = 63
+    private val notSupportedAssistantDevices = listOf(
+        "R1",
+        "r1"
+    )
 
     fun Context.isDanaInstalled(): Boolean {
         try {
@@ -30,6 +35,15 @@ internal object Util {
 
         val danaInfo = packageManager.getPackageInfo(packageName = DANA_PACKAGE_NAME)
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) danaInfo.longVersionCode else danaInfo.versionCode.toLong()
+    }
+
+    fun isDanaSupportedOnDevice(): Boolean {
+        Log.i("hossein" , "Build model : ${Build.MODEL}")
+        notSupportedAssistantDevices.forEach { model ->
+            if (Build.MODEL.contains(model, ignoreCase = true))
+                return false
+        }
+        return true
     }
 
     private fun PackageManager.getPackageInfo(packageName: String): PackageInfo =

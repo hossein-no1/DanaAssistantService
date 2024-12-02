@@ -73,4 +73,6 @@ class DanaService(private val context: Context) {
 
     fun getDanaVersionCode() = context.getDanaVersionCode()
 
+    fun isDanaSupportedOnDevice() = Util.isDanaSupportedOnDevice()
+
 }
