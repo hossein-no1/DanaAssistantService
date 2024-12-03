@@ -9,11 +9,13 @@ import android.os.Build
 import dana.assistant.service.model.ClientScreenType
 import dana.assistant.service.model.ClientType
 import dana.assistant.service.model.DanaScreenType
+import dana.assistant.service.model.WakeupType
 
 internal object Util {
 
     private const val DANA_PACKAGE_NAME = "ir.huma.voiceassistant"
     private const val LAST_DANA_VERSION_AFTER_REFACTOR = 63
+    private val notSupportedAssistantDevices = listOf("R1")
 
     fun Context.isDanaInstalled(): Boolean {
         try {
@@ -29,6 +31,14 @@ internal object Util {
 
         val danaInfo = packageManager.getPackageInfo(packageName = DANA_PACKAGE_NAME)
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) danaInfo.longVersionCode else danaInfo.versionCode.toLong()
+    }
+
+    fun isDanaSupportedOnDevice(): Boolean {
+        notSupportedAssistantDevices.forEach { model ->
+            if (Build.MODEL.contains(model))
+                return false
+        }
+        return true
     }
 
     private fun PackageManager.getPackageInfo(packageName: String): PackageInfo =
@@ -55,14 +65,16 @@ internal object Util {
         context: Context,
         danaScreenType: DanaScreenType,
         clientType: ClientType = ClientType.Launcher,
-        screenType: ClientScreenType = ClientScreenType.Home
+        screenType: ClientScreenType = ClientScreenType.Home,
+        wakeupType: WakeupType = WakeupType.Microphone
     ) {
         if (context.getDanaVersionCode() >= LAST_DANA_VERSION_AFTER_REFACTOR)
             openDanaNewWay(
                 context = context,
                 danaScreenType = danaScreenType,
                 clientType = clientType,
-                screenType = screenType
+                screenType = screenType,
+                wakeupType = wakeupType
             )
         else
             openDanaOldWay(
@@ -75,7 +87,8 @@ internal object Util {
         context: Context,
         danaScreenType: DanaScreenType,
         clientType: ClientType,
-        screenType: ClientScreenType
+        screenType: ClientScreenType,
+        wakeupType: WakeupType
     ) {
         val intent = Intent(
             Intent.ACTION_VIEW,
@@ -83,6 +96,7 @@ internal object Util {
         )
         intent.putExtra("client_package_name", clientType.packageName)
         intent.putExtra("current_screen", screenType.screen)
+        intent.putExtra("wakeup_type", wakeupType.way)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         try {
             context.startActivity(intent)

@@ -1,6 +1,8 @@
 package dana.assistant.service.model
 
 enum class CommandType {
+
+    // Player group
     VolumeUp,
     VolumeDown,
     VolumeMute,
@@ -17,10 +19,26 @@ enum class CommandType {
     MediaSubtitleIncrease,
     MediaSubtitleDecrease,
 
+    // General group
     PlayMovie,
     PlaySerial,
     PlayMusic,
     OpenApplication,
+    OpenWifiSetting,
+    OpenBluetoothSetting,
+    OpenLanguageSetting,
+    OpenSetting,
+    OpenProfile,
+    Shutdown,
+    Reboot,
+    BackPress,
+    HomePress,
+
+    // Content-Detail group
+    PlayContent,
+    BookmarkContent,
+    LikeContent,
+    DisLikeContent,
 
     Unknown
 }
@@ -45,5 +63,18 @@ fun parseCommand(command: String) = when (command) {
     "PlaySerial" -> CommandType.PlaySerial
     "PlayMusic" -> CommandType.PlayMusic
     "OpenApplication" -> CommandType.OpenApplication
+    "OpenWifiSetting" -> CommandType.OpenWifiSetting
+    "OpenBluetoothSetting" -> CommandType.OpenBluetoothSetting
+    "OpenLanguageSetting" -> CommandType.OpenLanguageSetting
+    "OpenSetting" -> CommandType.OpenSetting
+    "OpenProfile" -> CommandType.OpenProfile
+    "Shutdown" -> CommandType.Shutdown
+    "Reboot" -> CommandType.Reboot
+    "BackPress" -> CommandType.BackPress
+    "HomePress" -> CommandType.HomePress
+    "PlayContent" -> CommandType.PlayContent
+    "BookmarkContent" -> CommandType.BookmarkContent
+    "LikeContent" -> CommandType.LikeContent
+    "DisLikeContent" -> CommandType.DisLikeContent
     else -> CommandType.Unknown
 }
