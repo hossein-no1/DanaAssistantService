@@ -75,8 +75,8 @@ class DanaService(private val context: Context) {
 
     fun isDanaSupportedOnDevice() = Util.isDanaSupportedOnDevice()
 
-    fun isDanaSupportedOnDevice(screenType: ClientScreenType) =
-        Util.isDanaSupportedOnDevice() && Util.isDanaSupportedOnClientScreen(
+    fun isDanaSupportedInScreen(screenType: ClientScreenType) =
+        Util.isDanaSupportedOnClientScreen(
             context = context,
             screenType = screenType
         )
