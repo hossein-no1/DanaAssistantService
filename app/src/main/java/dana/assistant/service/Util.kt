@@ -16,6 +16,9 @@ internal object Util {
     private const val DANA_PACKAGE_NAME = "ir.huma.voiceassistant"
     private const val LAST_DANA_VERSION_AFTER_REFACTOR = 63
     private val notSupportedAssistantDevices = listOf("R1")
+    private const val LAST_DANA_VERSION_THAT_SUPPORTED_HOME = 62
+    private const val LAST_DANA_VERSION_THAT_SUPPORTED_PLAYER = 64
+    private const val LAST_DANA_VERSION_THAT_SUPPORTED_CONTENT_DETAIL = 70
 
     fun Context.isDanaInstalled(): Boolean {
         try {
@@ -39,6 +42,12 @@ internal object Util {
                 return false
         }
         return true
+    }
+
+    fun isDanaSupportedOnClientScreen(context: Context, screenType: ClientScreenType) = when(screenType){
+        ClientScreenType.Player -> context.getDanaVersionCode() >= LAST_DANA_VERSION_THAT_SUPPORTED_PLAYER
+        ClientScreenType.ContentDetail -> context.getDanaVersionCode() >= LAST_DANA_VERSION_THAT_SUPPORTED_CONTENT_DETAIL
+        ClientScreenType.Home -> context.getDanaVersionCode() >= LAST_DANA_VERSION_THAT_SUPPORTED_HOME
     }
 
     private fun PackageManager.getPackageInfo(packageName: String): PackageInfo =
