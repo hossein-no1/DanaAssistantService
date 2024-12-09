@@ -40,6 +40,12 @@ enum class CommandType {
     LikeContent,
     DisLikeContent,
 
+    // Home group
+    Scroll,
+    ChangeTab,
+    SelectTab,
+    Moving,
+
     Unknown
 }
 
@@ -76,5 +82,9 @@ fun parseCommand(command: String) = when (command) {
     "BookmarkContent" -> CommandType.BookmarkContent
     "LikeContent" -> CommandType.LikeContent
     "DisLikeContent" -> CommandType.DisLikeContent
+    "Scroll" -> CommandType.Scroll
+    "ChangeTab" -> CommandType.ChangeTab
+    "SelectTab" -> CommandType.SelectTab
+    "Moving" -> CommandType.Moving
     else -> CommandType.Unknown
 }
