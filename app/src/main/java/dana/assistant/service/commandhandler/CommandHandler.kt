@@ -1,0 +1,3 @@
+package dana.assistant.service.commandhandler
+
+interface CommandHandler
