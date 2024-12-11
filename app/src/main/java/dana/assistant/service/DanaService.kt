@@ -3,30 +3,41 @@ package dana.assistant.service
 import android.content.Context
 import android.content.IntentFilter
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import dana.assistant.service.Util.getDanaVersionCode
 import dana.assistant.service.Util.isDanaInstalled
 import dana.assistant.service.Util.openDana
 import dana.assistant.service.model.ClientScreenType
-import dana.assistant.service.model.ClientType
 import dana.assistant.service.model.DanaScreenType
 import dana.assistant.service.model.WakeupType
 
-
-class DanaService(private val context: Context) {
+class DanaService(
+    private val context: Context,
+    private val callBack: AssistantCallBack,
+) : DefaultLifecycleObserver {
 
     private var assistantReceiver: AssistantBroadcastReceiver? = null
 
+    override fun onStart(owner: LifecycleOwner) {
+        super.onStart(owner)
+        registerService()
+    }
+
+    override fun onStop(owner: LifecycleOwner) {
+        super.onStop(owner)
+        unregisterService()
+    }
+
     fun openAssistant(
-        packageName: ClientType = ClientType.Launcher,
         screenName: ClientScreenType = ClientScreenType.Home,
-        wakeupType: WakeupType = WakeupType.Microphone
+        wakeupType: WakeupType = WakeupType.Microphone,
     ) {
 
         if (context.isDanaInstalled()) {
             openDana(
                 context = context,
                 danaScreenType = DanaScreenType.Overlay,
-                clientType = packageName,
                 screenType = screenName,
                 wakeupType = wakeupType
             )
@@ -37,15 +48,13 @@ class DanaService(private val context: Context) {
     }
 
     fun openExplorer(
-        packageName: ClientType = ClientType.Launcher,
-        screenName: ClientScreenType = ClientScreenType.Home
+        screenName: ClientScreenType = ClientScreenType.Home,
     ) {
 
         if (context.isDanaInstalled()) {
             openDana(
                 context = context,
                 danaScreenType = DanaScreenType.Explorer,
-                clientType = packageName,
                 screenType = screenName
             )
         } else {
@@ -54,7 +63,7 @@ class DanaService(private val context: Context) {
 
     }
 
-    fun registerService(callBack: AssistantCallBack) {
+    private fun registerService() {
         assistantReceiver = AssistantBroadcastReceiver(callBack)
         val intentFilter = IntentFilter("dana.assistant.service.DETECT_COMMAND")
         ContextCompat.registerReceiver(
@@ -65,7 +74,7 @@ class DanaService(private val context: Context) {
         )
     }
 
-    fun unregisterService() {
+    private fun unregisterService() {
         context.unregisterReceiver(assistantReceiver)
     }
 
@@ -78,7 +87,7 @@ class DanaService(private val context: Context) {
     fun isDanaSupportedInScreen(screenType: ClientScreenType) =
         Util.isDanaSupportedOnClientScreen(
             context = context,
-            screenType = screenType
+            screenType = screenType,
         )
 
 }

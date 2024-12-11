@@ -3,13 +3,8 @@ package dana.assistant.service.model
 enum class CommandType {
 
     // Player group
-    VolumeUp,
-    VolumeDown,
-    VolumeMute,
     MediaPlay,
     MediaPause,
-    MediaNext,
-    MediaPrevious,
     MediaRewind,
     MediaFastForward,
     MediaAudioTrack,
@@ -20,43 +15,26 @@ enum class CommandType {
     MediaSubtitleDecrease,
 
     // General group
-    PlayMovie,
-    PlaySerial,
-    PlayMusic,
-    OpenApplication,
-    OpenWifiSetting,
-    OpenBluetoothSetting,
-    OpenLanguageSetting,
-    OpenSetting,
-    OpenProfile,
-    Shutdown,
-    Reboot,
     BackPress,
-    HomePress,
 
     // Content-Detail group
-    PlayContent,
-    BookmarkContent,
-    LikeContent,
-    DisLikeContent,
+    PLAY_CONTENT,
+    BOOKMARK_CONTENT,
+    LIKE_CONTENT,
+    DISLIKE_CONTENT,
 
     // Home group
-    Scroll,
-    ChangeTab,
-    SelectTab,
-    Moving,
+    SCROLL,
+    CHANGE_TAB,
+    SELECT_TAB,
+    MOVING,
 
     Unknown
 }
 
 fun parseCommand(command: String) = when (command) {
-    "VolumeUp" -> CommandType.VolumeUp
-    "VolumeDown" -> CommandType.VolumeDown
-    "VolumeMute" -> CommandType.VolumeMute
     "MediaPlay" -> CommandType.MediaPlay
     "MediaPause" -> CommandType.MediaPause
-    "MediaNext" -> CommandType.MediaNext
-    "MediaPrevious" -> CommandType.MediaPrevious
     "MediaRewind" -> CommandType.MediaRewind
     "MediaFastForward" -> CommandType.MediaFastForward
     "MediaAudioTrack" -> CommandType.MediaAudioTrack
@@ -65,26 +43,14 @@ fun parseCommand(command: String) = when (command) {
     "MediaChangeSubtitle" -> CommandType.MediaChangeSubtitle
     "MediaSubtitleIncrease" -> CommandType.MediaSubtitleIncrease
     "MediaSubtitleDecrease" -> CommandType.MediaSubtitleDecrease
-    "PlayMovie" -> CommandType.PlayMovie
-    "PlaySerial" -> CommandType.PlaySerial
-    "PlayMusic" -> CommandType.PlayMusic
-    "OpenApplication" -> CommandType.OpenApplication
-    "OpenWifiSetting" -> CommandType.OpenWifiSetting
-    "OpenBluetoothSetting" -> CommandType.OpenBluetoothSetting
-    "OpenLanguageSetting" -> CommandType.OpenLanguageSetting
-    "OpenSetting" -> CommandType.OpenSetting
-    "OpenProfile" -> CommandType.OpenProfile
-    "Shutdown" -> CommandType.Shutdown
-    "Reboot" -> CommandType.Reboot
     "BackPress" -> CommandType.BackPress
-    "HomePress" -> CommandType.HomePress
-    "PlayContent" -> CommandType.PlayContent
-    "BookmarkContent" -> CommandType.BookmarkContent
-    "LikeContent" -> CommandType.LikeContent
-    "DisLikeContent" -> CommandType.DisLikeContent
-    "Scroll" -> CommandType.Scroll
-    "ChangeTab" -> CommandType.ChangeTab
-    "SelectTab" -> CommandType.SelectTab
-    "Moving" -> CommandType.Moving
+    "PlayContent" -> CommandType.PLAY_CONTENT
+    "BookmarkContent" -> CommandType.BOOKMARK_CONTENT
+    "LikeContent" -> CommandType.LIKE_CONTENT
+    "DisLikeContent" -> CommandType.DISLIKE_CONTENT
+    "Scroll" -> CommandType.SCROLL
+    "ChangeTab" -> CommandType.CHANGE_TAB
+    "SelectTab" -> CommandType.SELECT_TAB
+    "Moving" -> CommandType.MOVING
     else -> CommandType.Unknown
 }
