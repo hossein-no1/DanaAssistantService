@@ -91,33 +91,13 @@ This commands was supported:
 - add thirteen new command
 - add startup type for better performance
 
-| command               | group | is_internal | argument     | default_value |
-|-----------------------|-------|-------------|--------------|---------------|
-| OpenWifiSetting | General | ✅ | -            | -             |
-| OpenBluetoothSetting | General | ✅ | -            | -             |
-| OpenSetting | General | ✅ | -            | -             |
-| OpenLanguageSetting | General | ✅ | -            | -             |
-| OpenProfile | General | ✅ | -            | -             |
-| Reboot | General | ✅ | -            | -             |
-| Shutdown | General | ✅ | -            | -             |
-| HomePress | General | ✅ | -            | -             |
-| BackPress | General | ✖️ | -            | -             |
-| PlayContent | ContentDetail | ✖️ | -            | -             |
-| BookmarkContent | ContentDetail | ✖️ | -            | -             |
-| LikeContent | ContentDetail | ✖️ | -            | -             |
-| DisLikeContent | ContentDetail | ✖️ | -            | -             |
-
-# version 1.3.0
-##### What's happened in this version?
-This commands was supported:
-- add four new command
-
-| command               | group | is_internal | argument     | default_value |
-|-----------------------|-------|-------------|--------------|---------------|
-| PlayMovie | Generel | ✅ | -            | -             |
-| PlaySerial | General | ✅ | -            | -             |
-| PlayMusic | General | ✅ | -            | -             |
-| OpenApplication | General | ✅ | -            | -             |
+| command               | group | argument     | default_value |
+|-----------------------|-------|--------------|---------------|
+| BackPress | General | -            | -             |
+| PlayContent | ContentDetail | -            | -             |
+| BookmarkContent | ContentDetail | -            | -             |
+| LikeContent | ContentDetail | -            | -             |
+| DisLikeContent | ContentDetail | -            | -             |
 
 # version 1.2.0
 ##### What's happened in this version?
@@ -130,27 +110,22 @@ This commands was supported:
 This commands was supported:
 - add two new command
 
-| command               | group | is_internal | argument     | default_value |
-|-----------------------|-------|-------------|--------------|---------------|
-| MediaPlay             | Player | ✖️ | -            | -             |
-| MediaPause            | Player | ✖️ | -            | -             |
+| command               | group | argument     | default_value |
+|-----------------------|-------|--------------|---------------|
+| MediaPlay             | Player | -            | -             |
+| MediaPause            | Player | -            | -             |
 
 # version 1.1.0
 ##### What's happened in this version?
 This commands was supported:
 
-| command | group | is_internal | argument     | default_value |
-|---------|-------|-------------|--------------|---------------|
-| VolumeUp              | Player | ✅ | 1 unit 10    | 2             |
-| VolumeDown            | Player | ✅ | 1 unit 10    | 2             |
-| VolumeMute            | Player | ✅ | -            | -             |
-| MediaNext             | Player | ✅ | -            | -             |
-| MediaPrevious         | Player | ✅ | -            | -             |
-| MediaRewind           | Player | ✖️ | 1 unit 36000 | 15            |
-| MediaFastForward      | Player | ✖️ | 1 unit 36000 | 15            |
-| MediaAudioTrack       | Player | ✖️ | -            | -             |
-| MediaChangePosition   | Player | ✖️ | 1 unit 36000 | 0             |
-| MediaChangeQuality    | Player | ✖️ | -            | -             |
-| MediaChangeSubtitle   | Player | ✖️ | -            | -             |
-| MediaSubtitleIncrease | Player | ✖️ | -            | -             |
-| MediaSubtitleDecrease | Player | ✖️ | -            | -             |
+| command | group | argument     | default_value |
+|---------|-------|--------------|---------------|
+| MediaRewind           | Player | 1 unit 36000 | 15            |
+| MediaFastForward      | Player | 1 unit 36000 | 15            |
+| MediaAudioTrack       | Player | -            | -             |
+| MediaChangePosition   | Player | 1 unit 36000 | 0             |
+| MediaChangeQuality    | Player | -            | -             |
+| MediaChangeSubtitle   | Player | -            | -             |
+| MediaSubtitleIncrease | Player | -            | -             |
+| MediaSubtitleDecrease | Player | -            | -             |
