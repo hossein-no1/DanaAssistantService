@@ -1,20 +1,89 @@
 # Dana assistant service
-This service is a mediator between two android application.<br/>
+This service is a mediator between two android applications.<br/>
 With this service, you can open **Dana voice assistant** on your app and receive some commands.
 # How to setup service
-*1.* in the module gradle:
+In the module gradle:
 > `implementation 'com.github.hossein-no1:DanaAssistantService:vx,x,x'`
 
-check the latest release version in github.
+check the latest release version in GitHub.
 
-*2.* create an instance of `DanaService()`
-and use `openAssistant(packageName : String, screenName : String)` function for open Dana overlay.<br/>
-**It's important to send your PackageName for receive data with successfully**
+### Setup `DanaService` in Activity/Fragment
 
-*3.* register service when screen created with this function:<br/>
-`registerService(object : AssistantCallBack)`
+```Kotlin
+class MainActivity : AppCompatActivity() {
 
-*4.* don't forget call `unregisterService()` when screen destroyed.
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val danaService = DanaService(
+            context = context,
+            callBack = object : AssistantCallBack {
+                override fun onDisLikeContent() {
+                    println("onDisLikeContent")
+                }
+
+                override fun onLikeContent() {
+                    println("onLikeContent")
+                }
+
+                override fun onBookmarkContent() {
+                    println("onBookmarkContent")
+                }
+
+                override fun onPlayContent() {
+                    println("onPlayContent")
+                }
+            },
+        )
+        lifecycle.addObserver(danaService)
+    }
+}
+```
+
+### Setup `DanaService` in Composable Screen
+
+```Kotlin
+@Composable
+fun MainScreen() {
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val context = LocalContext.current
+    
+    val myHelper = remember {
+        DanaService(
+            context = context,
+            callBack = object : AssistantCallBack {
+                override fun onDisLikeContent() {
+                    println("onDisLikeContent")
+                }
+
+                override fun onLikeContent() {
+                    println("onLikeContent")
+                }
+
+                override fun onBookmarkContent() {
+                    println("onBookmarkContent")
+                }
+
+                override fun onPlayContent() {
+                    println("onPlayContent")
+                }
+            },
+        )
+    }
+
+    DisposableEffect(lifecycleOwner) {
+        lifecycleOwner.lifecycle.addObserver(myHelper)
+
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(myHelper)
+        }
+    }
+
+    ....
+
+}
+```
 
 # version 1.3.1
 ##### What's happened in this version?
