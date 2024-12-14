@@ -12,11 +12,13 @@ check the latest release version in GitHub.
 ```Kotlin
 class MainActivity : AppCompatActivity() {
 
+    lateinit var danaService: DanaService
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val danaService = DanaService(
+        danaService = DanaService(
             context = context,
             callBack = object : AssistantCallBack {
                 override fun onDisLikeContent() {
@@ -38,6 +40,16 @@ class MainActivity : AppCompatActivity() {
         )
         lifecycle.addObserver(danaService)
     }
+
+    override fun onStart() {
+        super.onStart()
+        lifecycle.addObserver(danaService)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        lifecycle.removeObserver(danaService)
+    }
 }
 ```
 
@@ -49,7 +61,7 @@ fun MainScreen() {
     val lifecycleOwner = LocalLifecycleOwner.current
     val context = LocalContext.current
     
-    val myHelper = remember {
+    val danaService = remember {
         DanaService(
             context = context,
             callBack = object : AssistantCallBack {
@@ -73,10 +85,10 @@ fun MainScreen() {
     }
 
     DisposableEffect(lifecycleOwner) {
-        lifecycleOwner.lifecycle.addObserver(myHelper)
+        lifecycleOwner.lifecycle.addObserver(danaService)
 
         onDispose {
-            lifecycleOwner.lifecycle.removeObserver(myHelper)
+            lifecycleOwner.lifecycle.removeObserver(danaService)
         }
     }
 
@@ -84,6 +96,41 @@ fun MainScreen() {
 
 }
 ```
+
+### Setup `DanaService` in ViewModel
+
+```Kotlin
+    private val danaService = DanaService(
+        context = context,
+        callBack = object : AssistantCallBack {
+            override fun onDisLikeContent() {
+                println("onDisLikeContent")
+            }
+
+            override fun onLikeContent() {
+                println("onLikeContent")
+            }
+
+            override fun onBookmarkContent() {
+                println("onBookmarkContent")
+            }
+
+            override fun onPlayContent() {
+                println("onPlayContent")
+            }
+        },
+    )
+
+    fun attachToLifecycle(lifecycleOwner: LifecycleOwner) {
+        lifecycleOwner.lifecycle.addObserver(danaService)
+    }
+
+    fun detachToLifecycle(lifecycleOwner: LifecycleOwner) {
+        lifecycleOwner.lifecycle.removeObserver(danaService)
+    }
+```
+
+For use in an Activity/Fragment or Composable function, attach and detach the `DanaService` like setting it up in the two sections above.
 
 # version 1.3.1
 ##### What's happened in this version?
