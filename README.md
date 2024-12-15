@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
         danaService = DanaService(
             context = context,
-            callBack = object : AssistantCallBack {
+            callBack = object : ContentDetailCommandHandler {
                 override fun onDisLikeContent() {
                     println("onDisLikeContent")
                 }
@@ -64,7 +64,7 @@ fun MainScreen() {
     val danaService = remember {
         DanaService(
             context = context,
-            callBack = object : AssistantCallBack {
+            callBack = object : ContentDetailCommandHandler {
                 override fun onDisLikeContent() {
                     println("onDisLikeContent")
                 }
@@ -102,7 +102,7 @@ fun MainScreen() {
 ```Kotlin
     private val danaService = DanaService(
         context = context,
-        callBack = object : AssistantCallBack {
+        callBack = object : ContentDetailCommandHandler {
             override fun onDisLikeContent() {
                 println("onDisLikeContent")
             }
@@ -130,11 +130,11 @@ fun MainScreen() {
     }
 ```
 
-For use in an Activity/Fragment or Composable function, attach and detach the `DanaService` like setting it up in the two sections above.
+For use in an Activity/Fragment or Composeable function, attach and detach the `DanaService` like you would set it up in the two sections above.
 
 # version 1.3.1
 ##### What's happened in this version?
-This commands was supported:
+These commands was supported:
 - add thirteen new command
 - add startup type for better performance
 
@@ -148,13 +148,13 @@ This commands was supported:
 
 # version 1.2.0
 ##### What's happened in this version?
-This commands was supported:
+This command was supported:
 - disable allowbackup
 
 ## Commands version 1.2.0
 
 ##### What's happened in this version?
-This commands was supported:
+These commands was supported:
 - add two new command
 
 | command               | group | argument     | default_value |
@@ -164,7 +164,7 @@ This commands was supported:
 
 # version 1.1.0
 ##### What's happened in this version?
-This commands was supported:
+These commands was supported:
 
 | command | group | argument     | default_value |
 |---------|-------|--------------|---------------|
