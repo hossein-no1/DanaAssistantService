@@ -1,3 +1,7 @@
 package dana.assistant.service.commandhandler
 
-interface CommandHandler
+import dana.assistant.service.model.CommandType
+
+interface CommandHandler {
+    fun onReceiveCommand(commandType: CommandType, values: List<String>)
+}

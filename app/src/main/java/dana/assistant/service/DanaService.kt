@@ -8,13 +8,14 @@ import androidx.lifecycle.LifecycleOwner
 import dana.assistant.service.Util.getDanaVersionCode
 import dana.assistant.service.Util.isDanaInstalled
 import dana.assistant.service.Util.openDana
+import dana.assistant.service.commandhandler.CommandHandler
 import dana.assistant.service.model.ClientScreenType
 import dana.assistant.service.model.DanaScreenType
 import dana.assistant.service.model.WakeupType
 
 class DanaService(
     private val context: Context,
-    private val callBack: AssistantCallBack,
+    private val callBack: CommandHandler,
 ) : DefaultLifecycleObserver {
 
     private var assistantReceiver: AssistantBroadcastReceiver? = null

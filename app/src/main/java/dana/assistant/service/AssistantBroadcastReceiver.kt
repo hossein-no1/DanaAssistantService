@@ -3,9 +3,10 @@ package dana.assistant.service
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import dana.assistant.service.commandhandler.CommandHandler
 import dana.assistant.service.model.parseCommand
 
-internal class AssistantBroadcastReceiver(private val callBack: AssistantCallBack) :
+internal class AssistantBroadcastReceiver(private val callBack: CommandHandler) :
     BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
 
