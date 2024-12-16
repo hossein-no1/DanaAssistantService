@@ -15,7 +15,6 @@ import dana.assistant.service.model.WakeupType
 
 class DanaService(
     private val context: Context,
-    private val callBack: CommandHandler,
 ) : DefaultLifecycleObserver {
 
     private var assistantReceiver: AssistantBroadcastReceiver? = null
@@ -65,7 +64,6 @@ class DanaService(
     }
 
     private fun registerService() {
-        assistantReceiver = AssistantBroadcastReceiver(callBack)
         val intentFilter = IntentFilter("dana.assistant.service.DETECT_COMMAND")
         ContextCompat.registerReceiver(
             context,
@@ -73,6 +71,10 @@ class DanaService(
             intentFilter,
             ContextCompat.RECEIVER_EXPORTED
         )
+    }
+
+    fun registerCommandHandler(commandHandler: CommandHandler) {
+        assistantReceiver = AssistantBroadcastReceiver(commandHandler)
     }
 
     private fun unregisterService() {

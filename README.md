@@ -18,9 +18,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        danaService = DanaService(
-            context = context,
-            callBack = object : ContentDetailCommandHandler {
+        danaService = DanaService(context = context)
+
+        danaService.registerCommandHandler(
+            commandHandler = object : ContentDetailCommandHandler {
                 override fun onDisLikeContent() {
                     println("onDisLikeContent")
                 }
@@ -36,8 +37,9 @@ class MainActivity : AppCompatActivity() {
                 override fun onPlayContent() {
                     println("onPlayContent")
                 }
-            },
+            }
         )
+        
         lifecycle.addObserver(danaService)
     }
 
@@ -62,9 +64,12 @@ fun MainScreen() {
     val context = LocalContext.current
     
     val danaService = remember {
-        DanaService(
-            context = context,
-            callBack = object : ContentDetailCommandHandler {
+        DanaService(context = context)
+    }
+    
+    LaunchEffect(Unit) {
+        danaService.registerCommandHandler(
+            commandHandler = object : ContentDetailCommandHandler {
                 override fun onDisLikeContent() {
                     println("onDisLikeContent")
                 }
@@ -80,7 +85,7 @@ fun MainScreen() {
                 override fun onPlayContent() {
                     println("onPlayContent")
                 }
-            },
+            }
         )
     }
 
@@ -100,28 +105,30 @@ fun MainScreen() {
 ### Setup `DanaService` in ViewModel
 
 ```Kotlin
-    private val danaService = DanaService(
-        context = context,
-        callBack = object : ContentDetailCommandHandler {
-            override fun onDisLikeContent() {
-                println("onDisLikeContent")
-            }
-
-            override fun onLikeContent() {
-                println("onLikeContent")
-            }
-
-            override fun onBookmarkContent() {
-                println("onBookmarkContent")
-            }
-
-            override fun onPlayContent() {
-                println("onPlayContent")
-            }
-        },
-    )
+    private val danaService = DanaService(context = context)
 
     fun attachToLifecycle(lifecycleOwner: LifecycleOwner) {
+
+        danaService.registerCommandHandler(
+            commandHandler = object : ContentDetailCommandHandler {
+                override fun onDisLikeContent() {
+                    println("onDisLikeContent")
+                }
+
+                override fun onLikeContent() {
+                    println("onLikeContent")
+                }
+
+                override fun onBookmarkContent() {
+                    println("onBookmarkContent")
+                }
+
+                override fun onPlayContent() {
+                    println("onPlayContent")
+                }
+            }
+        )
+        
         lifecycleOwner.lifecycle.addObserver(danaService)
     }
 
