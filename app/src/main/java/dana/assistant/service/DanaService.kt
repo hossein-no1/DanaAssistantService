@@ -8,16 +8,18 @@ import androidx.lifecycle.LifecycleOwner
 import dana.assistant.service.Util.getDanaVersionCode
 import dana.assistant.service.Util.isDanaInstalled
 import dana.assistant.service.Util.openDana
+import dana.assistant.service.Util.registerService
+import dana.assistant.service.Util.unregisterService
 import dana.assistant.service.commandhandler.CommandHandler
 import dana.assistant.service.model.ClientScreenType
 import dana.assistant.service.model.DanaScreenType
 import dana.assistant.service.model.WakeupType
 
 class DanaService(
-    private val context: Context,
+    val context: Context,
 ) : DefaultLifecycleObserver {
 
-    private var assistantReceiver: AssistantBroadcastReceiver? = null
+    internal var assistantReceiver: AssistantBroadcastReceiver? = null
 
     override fun onStart(owner: LifecycleOwner) {
         super.onStart(owner)
@@ -63,22 +65,8 @@ class DanaService(
 
     }
 
-    private fun registerService() {
-        val intentFilter = IntentFilter("dana.assistant.service.DETECT_COMMAND")
-        ContextCompat.registerReceiver(
-            context,
-            assistantReceiver,
-            intentFilter,
-            ContextCompat.RECEIVER_EXPORTED
-        )
-    }
-
     fun registerCommandHandler(commandHandler: CommandHandler) {
         assistantReceiver = AssistantBroadcastReceiver(commandHandler)
-    }
-
-    private fun unregisterService() {
-        context.unregisterReceiver(assistantReceiver)
     }
 
     fun isDanaInstalled() = context.isDanaInstalled()

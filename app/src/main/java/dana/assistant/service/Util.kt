@@ -2,10 +2,12 @@ package dana.assistant.service
 
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
+import androidx.core.content.ContextCompat
 import dana.assistant.service.model.ClientScreenType
 import dana.assistant.service.model.DanaScreenType
 import dana.assistant.service.model.WakeupType
@@ -116,6 +118,20 @@ internal object Util {
             packageName = DANA_PACKAGE_NAME,
             activityName = danaScreenType.activityName
         )
+    }
+
+    internal fun DanaService.registerService() {
+        val intentFilter = IntentFilter("dana.assistant.service.DETECT_COMMAND")
+        ContextCompat.registerReceiver(
+            context,
+            assistantReceiver,
+            intentFilter,
+            ContextCompat.RECEIVER_EXPORTED
+        )
+    }
+
+    internal fun DanaService.unregisterService() {
+        context.unregisterReceiver(assistantReceiver)
     }
 
 }
