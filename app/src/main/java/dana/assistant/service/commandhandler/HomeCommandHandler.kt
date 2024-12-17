@@ -1,5 +1,6 @@
 package dana.assistant.service.commandhandler
 
+import androidx.annotation.RestrictTo
 import dana.assistant.service.model.CommandType
 import dana.assistant.service.model.Direction
 import dana.assistant.service.model.MovingDirection
@@ -10,6 +11,7 @@ import dana.assistant.service.model.parseVerticalDirection
 
 interface HomeCommandHandler : CommandHandler {
 
+    @RestrictTo(RestrictTo.Scope.LIBRARY)
     override fun onReceiveCommand(commandType: CommandType, values: List<String>) {
         when (commandType) {
             CommandType.SCROLL -> onScroll(direction = parseDirection(direction = values[0]))
