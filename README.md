@@ -39,6 +39,10 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         )
+
+        danaService.setupMicReceiver {
+            viewModel.onDanaStartByRemoteControl()
+        }
         
         lifecycle.addObserver(danaService)
     }
@@ -87,6 +91,10 @@ fun MainScreen() {
                 }
             }
         )
+
+        danaService.setupMicReceiver {
+            viewModel.onDanaStartByRemoteControl()
+        }
     }
 
     DisposableEffect(lifecycleOwner) {
@@ -128,6 +136,10 @@ fun MainScreen() {
                 }
             }
         )
+
+        danaService.setupMicReceiver {
+            viewModel.onDanaStartByRemoteControl()
+        }
         
         lifecycleOwner.lifecycle.addObserver(danaService)
     }

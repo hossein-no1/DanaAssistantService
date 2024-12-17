@@ -1,14 +1,16 @@
 package dana.assistant.service
 
+import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.IntentFilter
-import androidx.core.content.ContextCompat
+import android.content.Intent
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import dana.assistant.service.Util.getDanaVersionCode
 import dana.assistant.service.Util.isDanaInstalled
 import dana.assistant.service.Util.openDana
+import dana.assistant.service.Util.registerMicReceiver
 import dana.assistant.service.Util.registerService
+import dana.assistant.service.Util.unregisterMicReceiver
 import dana.assistant.service.Util.unregisterService
 import dana.assistant.service.commandhandler.CommandHandler
 import dana.assistant.service.model.ClientScreenType
@@ -21,14 +23,30 @@ class DanaService(
 
     internal var assistantReceiver: AssistantBroadcastReceiver? = null
 
+    internal lateinit var micReceiver: BroadcastReceiver
+
     override fun onStart(owner: LifecycleOwner) {
         super.onStart(owner)
         registerService()
+        registerMicReceiver()
     }
 
     override fun onStop(owner: LifecycleOwner) {
         super.onStop(owner)
         unregisterService()
+        unregisterMicReceiver()
+    }
+
+    fun setupMicReceiver(onOpened: () -> Unit) {
+        micReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                openDana(
+                    danaService = this@DanaService,
+                    wakeupType = WakeupType.Microphone,
+                    onOpened = onOpened,
+                )
+            }
+        }
     }
 
     fun openAssistant(

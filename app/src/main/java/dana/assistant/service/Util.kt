@@ -15,6 +15,7 @@ import dana.assistant.service.model.WakeupType
 internal object Util {
 
     private const val DANA_PACKAGE_NAME = "ir.huma.voiceassistant"
+    private const val VOICE_RECEIVER_ACTION = "ir.huma.action.newVoiceSearch"
     private const val LAST_DANA_VERSION_AFTER_REFACTOR = 63
     private val notSupportedAssistantDevices = listOf("R1")
     private const val LAST_DANA_VERSION_THAT_SUPPORTED_HOME = 62
@@ -132,6 +133,39 @@ internal object Util {
 
     internal fun DanaService.unregisterService() {
         context.unregisterReceiver(assistantReceiver)
+    }
+
+    internal fun DanaService.registerMicReceiver() {
+        ContextCompat.registerReceiver(
+            context,
+            micReceiver,
+            IntentFilter(VOICE_RECEIVER_ACTION),
+            ContextCompat.RECEIVER_EXPORTED,
+        )
+    }
+
+    internal fun DanaService.unregisterMicReceiver() {
+        context.unregisterReceiver(micReceiver)
+    }
+
+    internal fun DanaService.openDana(
+        danaService: DanaService,
+        wakeupType: WakeupType,
+        onOpened: () -> Unit,
+    ) {
+        val isDanaInstalled = danaService.isDanaInstalled()
+        val isDanaSupported =
+            danaService.isDanaSupportedOnDevice() && danaService.isDanaSupportedInScreen(screenType = ClientScreenType.ContentDetail)
+
+        if (isDanaInstalled && isDanaSupported) {
+            danaService.let {
+                it.openAssistant(
+                    screenName = ClientScreenType.ContentDetail,
+                    wakeupType = wakeupType
+                )
+                onOpened()
+            }
+        }
     }
 
 }
