@@ -29,7 +29,29 @@ enum class CommandType {
     SELECT_TAB,
     MOVING,
 
-    Unknown
+    Unknown,
+}
+
+enum class Direction {
+    LEFT,
+    RIGHT,
+    UP,
+    DOWN,
+    UNKNOWN,
+}
+
+enum class VerticalDirection {
+    UP,
+    DOWN,
+    UNKNOWN,
+}
+
+enum class MovingDirection {
+    FORWARD,
+    BACKWARD,
+    FIRST,
+    LAST,
+    UNKNOWN,
 }
 
 fun parseCommand(command: String) = when (command) {
@@ -53,4 +75,26 @@ fun parseCommand(command: String) = when (command) {
     "SelectTab" -> CommandType.SELECT_TAB
     "Moving" -> CommandType.MOVING
     else -> CommandType.Unknown
+}
+
+fun parseDirection(direction: String) = when (direction) {
+    "left" -> Direction.LEFT
+    "right" -> Direction.RIGHT
+    "up" -> Direction.UP
+    "down" -> Direction.DOWN
+    else -> Direction.UNKNOWN
+}
+
+fun parseVerticalDirection(direction: String) = when (direction) {
+    "up" -> VerticalDirection.UP
+    "down" -> VerticalDirection.DOWN
+    else -> VerticalDirection.UNKNOWN
+}
+
+fun parseMovieDirection(direction: String) = when (direction) {
+    "forward" -> MovingDirection.FORWARD
+    "backward" -> MovingDirection.BACKWARD
+    "first" -> MovingDirection.FIRST
+    "last" -> MovingDirection.LAST
+    else -> MovingDirection.UNKNOWN
 }

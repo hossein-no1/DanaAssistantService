@@ -37,7 +37,7 @@ class DanaService(
         unregisterMicReceiver()
     }
 
-    fun setupMicReceiver(onOpened: () -> Unit) {
+    fun setupMicReceiver(onOpened: () -> Unit = {}) {
         micReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 openDana(
