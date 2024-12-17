@@ -7,7 +7,7 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import dana.assistant.service.Util.getDanaVersionCode
 import dana.assistant.service.Util.isDanaInstalled
-import dana.assistant.service.Util.openDana
+import dana.assistant.service.Util.openDanaByMicrophone
 import dana.assistant.service.Util.registerMicReceiver
 import dana.assistant.service.Util.registerService
 import dana.assistant.service.Util.unregisterMicReceiver
@@ -37,12 +37,14 @@ class DanaService(
         unregisterMicReceiver()
     }
 
-    fun setupMicReceiver(clientScreenType: ClientScreenType, onOpened: () -> Unit = {}) {
+    fun setupMicReceiver(
+        screenName: ClientScreenType = ClientScreenType.Home,
+        onOpened: () -> Unit = {}
+    ) {
         micReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
-                openDana(
-                    clientScreenType = clientScreenType,
-                    wakeupType = WakeupType.Microphone,
+                openDanaByMicrophone(
+                    clientScreenType = screenName,
                     onOpened = onOpened,
                 )
             }
@@ -51,15 +53,14 @@ class DanaService(
 
     fun openAssistant(
         screenName: ClientScreenType = ClientScreenType.Home,
-        wakeupType: WakeupType = WakeupType.Microphone,
     ) {
 
         if (context.isDanaInstalled()) {
-            openDana(
+            openDanaByMicrophone(
                 context = context,
                 danaScreenType = DanaScreenType.Overlay,
                 screenType = screenName,
-                wakeupType = wakeupType
+                wakeupType = WakeupType.ClickOnObject
             )
         } else {
             throw AssistantException(message = "Dana is not installed on your device!")
@@ -72,10 +73,11 @@ class DanaService(
     ) {
 
         if (context.isDanaInstalled()) {
-            openDana(
+            openDanaByMicrophone(
                 context = context,
                 danaScreenType = DanaScreenType.Explorer,
-                screenType = screenName
+                screenType = screenName,
+                wakeupType = WakeupType.ClickOnObject
             )
         } else {
             throw AssistantException(message = "Dana is not installed on your device!")

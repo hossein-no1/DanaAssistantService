@@ -73,7 +73,7 @@ internal object Util {
         }
     }
 
-    fun openDana(
+    fun openDanaByMicrophone(
         context: Context,
         danaScreenType: DanaScreenType,
         screenType: ClientScreenType = ClientScreenType.Home,
@@ -148,21 +148,20 @@ internal object Util {
         context.unregisterReceiver(micReceiver)
     }
 
-    fun DanaService.openDana(
+    fun DanaService.openDanaByMicrophone(
         clientScreenType: ClientScreenType,
-        wakeupType: WakeupType,
         onOpened: () -> Unit,
     ) {
-        val isDanaInstalled = isDanaInstalled()
-        val isDanaSupported =
-            isDanaSupportedOnDevice() && isDanaSupportedInScreen(screenType = ClientScreenType.ContentDetail)
-
-        if (isDanaInstalled && isDanaSupported) {
-            openAssistant(
-                screenName = clientScreenType,
-                wakeupType = wakeupType
+        if (context.isDanaInstalled()) {
+            openDanaByMicrophone(
+                context = context,
+                danaScreenType = DanaScreenType.Overlay,
+                screenType = clientScreenType,
+                wakeupType = WakeupType.Microphone
             )
             onOpened()
+        } else {
+            throw AssistantException(message = "Dana is not installed on your device!")
         }
     }
 
