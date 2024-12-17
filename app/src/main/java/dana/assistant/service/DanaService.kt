@@ -37,11 +37,11 @@ class DanaService(
         unregisterMicReceiver()
     }
 
-    fun setupMicReceiver(onOpened: () -> Unit = {}) {
+    fun setupMicReceiver(clientScreenType: ClientScreenType, onOpened: () -> Unit = {}) {
         micReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 openDana(
-                    danaService = this@DanaService,
+                    clientScreenType = clientScreenType,
                     wakeupType = WakeupType.Microphone,
                     onOpened = onOpened,
                 )

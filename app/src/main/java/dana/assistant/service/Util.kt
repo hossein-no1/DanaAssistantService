@@ -121,7 +121,7 @@ internal object Util {
         )
     }
 
-    internal fun DanaService.registerService() {
+    fun DanaService.registerService() {
         val intentFilter = IntentFilter("dana.assistant.service.DETECT_COMMAND")
         ContextCompat.registerReceiver(
             context,
@@ -131,11 +131,11 @@ internal object Util {
         )
     }
 
-    internal fun DanaService.unregisterService() {
+    fun DanaService.unregisterService() {
         context.unregisterReceiver(assistantReceiver)
     }
 
-    internal fun DanaService.registerMicReceiver() {
+    fun DanaService.registerMicReceiver() {
         ContextCompat.registerReceiver(
             context,
             micReceiver,
@@ -144,27 +144,25 @@ internal object Util {
         )
     }
 
-    internal fun DanaService.unregisterMicReceiver() {
+    fun DanaService.unregisterMicReceiver() {
         context.unregisterReceiver(micReceiver)
     }
 
-    internal fun DanaService.openDana(
-        danaService: DanaService,
+    fun DanaService.openDana(
+        clientScreenType: ClientScreenType,
         wakeupType: WakeupType,
         onOpened: () -> Unit,
     ) {
-        val isDanaInstalled = danaService.isDanaInstalled()
+        val isDanaInstalled = isDanaInstalled()
         val isDanaSupported =
-            danaService.isDanaSupportedOnDevice() && danaService.isDanaSupportedInScreen(screenType = ClientScreenType.ContentDetail)
+            isDanaSupportedOnDevice() && isDanaSupportedInScreen(screenType = ClientScreenType.ContentDetail)
 
         if (isDanaInstalled && isDanaSupported) {
-            danaService.let {
-                it.openAssistant(
-                    screenName = ClientScreenType.ContentDetail,
-                    wakeupType = wakeupType
-                )
-                onOpened()
-            }
+            openAssistant(
+                screenName = clientScreenType,
+                wakeupType = wakeupType
+            )
+            onOpened()
         }
     }
 
