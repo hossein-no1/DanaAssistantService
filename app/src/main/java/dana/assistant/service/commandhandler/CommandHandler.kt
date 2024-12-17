@@ -8,5 +8,6 @@ import dana.assistant.service.model.CommandType
  * Use «ContentDetailCommandHandler.kt»,«HomeCommandHandler.kt» and etc.
  * */
 interface CommandHandler {
+    @RestrictTo(RestrictTo.Scope.LIBRARY)
     fun onReceiveCommand(commandType: CommandType, values: List<String>)
 }
