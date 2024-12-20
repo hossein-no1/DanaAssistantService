@@ -53,8 +53,8 @@ class DanaService(
 
     fun openAssistant(
         screenName: ClientScreenType = ClientScreenType.Home,
+        onOpened: () -> Unit = {},
     ) {
-
         if (context.isDanaInstalled()) {
             openDanaByMicrophone(
                 context = context,
@@ -62,6 +62,7 @@ class DanaService(
                 screenType = screenName,
                 wakeupType = WakeupType.ClickOnObject
             )
+            onOpened()
         } else {
             throw AssistantException(message = "Dana is not installed on your device!")
         }
@@ -70,6 +71,7 @@ class DanaService(
 
     fun openExplorer(
         screenName: ClientScreenType = ClientScreenType.Home,
+        onOpened: () -> Unit = {},
     ) {
 
         if (context.isDanaInstalled()) {
@@ -79,6 +81,7 @@ class DanaService(
                 screenType = screenName,
                 wakeupType = WakeupType.ClickOnObject
             )
+            onOpened()
         } else {
             throw AssistantException(message = "Dana is not installed on your device!")
         }
