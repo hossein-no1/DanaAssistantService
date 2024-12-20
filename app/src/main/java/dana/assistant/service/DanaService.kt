@@ -1,35 +1,68 @@
 package dana.assistant.service
 
+import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.IntentFilter
-import androidx.core.content.ContextCompat
+import android.content.Intent
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import dana.assistant.service.Util.getDanaVersionCode
 import dana.assistant.service.Util.isDanaInstalled
-import dana.assistant.service.Util.openDana
+import dana.assistant.service.Util.openDanaByMicrophone
+import dana.assistant.service.Util.registerMicReceiver
+import dana.assistant.service.Util.registerService
+import dana.assistant.service.Util.unregisterMicReceiver
+import dana.assistant.service.Util.unregisterService
+import dana.assistant.service.commandhandler.CommandHandler
 import dana.assistant.service.model.ClientScreenType
-import dana.assistant.service.model.ClientType
 import dana.assistant.service.model.DanaScreenType
 import dana.assistant.service.model.WakeupType
 
+class DanaService(
+    val context: Context,
+) : DefaultLifecycleObserver {
 
-class DanaService(private val context: Context) {
+    internal var assistantReceiver: AssistantBroadcastReceiver? = null
 
-    private var assistantReceiver: AssistantBroadcastReceiver? = null
+    internal lateinit var micReceiver: BroadcastReceiver
+
+    override fun onStart(owner: LifecycleOwner) {
+        super.onStart(owner)
+        registerService()
+        registerMicReceiver()
+    }
+
+    override fun onStop(owner: LifecycleOwner) {
+        super.onStop(owner)
+        unregisterService()
+        unregisterMicReceiver()
+    }
+
+    fun setupMicReceiver(
+        screenName: ClientScreenType = ClientScreenType.Home,
+        onOpened: () -> Unit = {}
+    ) {
+        micReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                openDanaByMicrophone(
+                    clientScreenType = screenName,
+                    onOpened = onOpened,
+                )
+            }
+        }
+    }
 
     fun openAssistant(
-        packageName: ClientType = ClientType.Launcher,
         screenName: ClientScreenType = ClientScreenType.Home,
-        wakeupType: WakeupType = WakeupType.Microphone
+        onOpened: () -> Unit = {},
     ) {
-
         if (context.isDanaInstalled()) {
-            openDana(
+            openDanaByMicrophone(
                 context = context,
                 danaScreenType = DanaScreenType.Overlay,
-                clientType = packageName,
                 screenType = screenName,
-                wakeupType = wakeupType
+                wakeupType = WakeupType.ClickOnObject
             )
+            onOpened()
         } else {
             throw AssistantException(message = "Dana is not installed on your device!")
         }
@@ -37,36 +70,26 @@ class DanaService(private val context: Context) {
     }
 
     fun openExplorer(
-        packageName: ClientType = ClientType.Launcher,
-        screenName: ClientScreenType = ClientScreenType.Home
+        screenName: ClientScreenType = ClientScreenType.Home,
+        onOpened: () -> Unit = {},
     ) {
 
         if (context.isDanaInstalled()) {
-            openDana(
+            openDanaByMicrophone(
                 context = context,
                 danaScreenType = DanaScreenType.Explorer,
-                clientType = packageName,
-                screenType = screenName
+                screenType = screenName,
+                wakeupType = WakeupType.ClickOnObject
             )
+            onOpened()
         } else {
             throw AssistantException(message = "Dana is not installed on your device!")
         }
 
     }
 
-    fun registerService(callBack: AssistantCallBack) {
-        assistantReceiver = AssistantBroadcastReceiver(callBack)
-        val intentFilter = IntentFilter("dana.assistant.service.DETECT_COMMAND")
-        ContextCompat.registerReceiver(
-            context,
-            assistantReceiver,
-            intentFilter,
-            ContextCompat.RECEIVER_EXPORTED
-        )
-    }
-
-    fun unregisterService() {
-        context.unregisterReceiver(assistantReceiver)
+    fun registerCommandHandler(commandHandler: CommandHandler) {
+        assistantReceiver = AssistantBroadcastReceiver(commandHandler)
     }
 
     fun isDanaInstalled() = context.isDanaInstalled()
@@ -78,7 +101,7 @@ class DanaService(private val context: Context) {
     fun isDanaSupportedInScreen(screenType: ClientScreenType) =
         Util.isDanaSupportedOnClientScreen(
             context = context,
-            screenType = screenType
+            screenType = screenType,
         )
 
 }
