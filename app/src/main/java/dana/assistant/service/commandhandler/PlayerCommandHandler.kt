@@ -7,6 +7,7 @@ interface PlayerCommandHandler : CommandHandler {
 
     @RestrictTo(RestrictTo.Scope.LIBRARY)
     override fun onReceiveCommand(commandType: CommandType, values: List<String>) {
+        super.onReceiveCommand(commandType, values)
         when (commandType) {
             CommandType.MediaPlay -> onMediaPlay()
             CommandType.MediaPause -> onMediaPause()

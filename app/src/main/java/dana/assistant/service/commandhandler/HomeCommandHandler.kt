@@ -13,6 +13,7 @@ interface HomeCommandHandler : CommandHandler {
 
     @RestrictTo(RestrictTo.Scope.LIBRARY)
     override fun onReceiveCommand(commandType: CommandType, values: List<String>) {
+        super.onReceiveCommand(commandType, values)
         when (commandType) {
             CommandType.SCROLL -> onScroll(direction = parseDirection(direction = values[0]))
             CommandType.CHANGE_TAB -> onChangeTab(direction = parseMovieDirection(direction = values[0]))

@@ -7,6 +7,7 @@ interface ContentDetailCommandHandler : CommandHandler {
 
     @RestrictTo(RestrictTo.Scope.LIBRARY)
     override fun onReceiveCommand(commandType: CommandType, values: List<String>) {
+        super.onReceiveCommand(commandType, values)
         when (commandType) {
             CommandType.PLAY_CONTENT -> onPlayContent()
             CommandType.BOOKMARK_CONTENT -> onBookmarkContent()
