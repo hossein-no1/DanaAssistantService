@@ -92,16 +92,9 @@ class DanaService(
         assistantReceiver = AssistantBroadcastReceiver(commandHandler)
     }
 
-    fun isDanaInstalled() = context.isDanaInstalled()
-
-    fun getDanaVersionCode() = context.getDanaVersionCode()
-
-    fun isDanaSupportedOnDevice() = Util.isDanaSupportedOnDevice()
-
     fun isDanaSupportedInScreen(screenType: ClientScreenType) =
-        Util.isDanaSupportedOnClientScreen(
-            context = context,
-            screenType = screenType,
-        )
+        context.isDanaInstalled() &&
+                Util.isDanaSupportedOnClientScreen(context = context, screenType = screenType) &&
+                Util.isDanaSupportedOnDevice()
 
 }
