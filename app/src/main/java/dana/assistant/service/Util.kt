@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import dana.assistant.service.model.ClientScreenType
 import dana.assistant.service.model.DanaScreenType
 import dana.assistant.service.model.WakeupType
+import dana.assistant.service.model.parseClient
 
 internal object Util {
 
@@ -18,9 +19,6 @@ internal object Util {
     private const val VOICE_RECEIVER_ACTION = "ir.huma.action.newVoiceSearch"
     private const val LAST_DANA_VERSION_AFTER_REFACTOR = 63
     private val notSupportedAssistantDevices = listOf("R1")
-    private const val LAST_DANA_VERSION_THAT_SUPPORTED_HOME = 62
-    private const val LAST_DANA_VERSION_THAT_SUPPORTED_PLAYER = 64
-    private const val LAST_DANA_VERSION_THAT_SUPPORTED_CONTENT_DETAIL = 70
 
     fun Context.isDanaInstalled(): Boolean {
         try {
@@ -47,11 +45,10 @@ internal object Util {
     }
 
     fun isDanaSupportedOnClientScreen(context: Context, screenType: ClientScreenType) =
-        when (screenType) {
-            ClientScreenType.Player -> context.getDanaVersionCode() >= LAST_DANA_VERSION_THAT_SUPPORTED_PLAYER
-            ClientScreenType.ContentDetail -> context.getDanaVersionCode() >= LAST_DANA_VERSION_THAT_SUPPORTED_CONTENT_DETAIL
-            ClientScreenType.Home -> context.getDanaVersionCode() >= LAST_DANA_VERSION_THAT_SUPPORTED_HOME
-        }
+        parseClient(context.packageName).isDanaSupported(
+            danaVersion = context.getDanaVersionCode(),
+            type = screenType
+        )
 
     private fun PackageManager.getPackageInfo(packageName: String): PackageInfo =
         getPackageInfo(packageName, 0)
