@@ -2,6 +2,7 @@ package dana.assistant.service.commandhandler
 
 import androidx.annotation.RestrictTo
 import dana.assistant.service.model.CommandType
+import dana.assistant.service.model.ErrorType
 
 interface CommandHandler {
 
@@ -17,5 +18,6 @@ interface CommandHandler {
     }
 
     fun onBackPress() = Unit
+    fun onError(type: ErrorType)
 
 }
