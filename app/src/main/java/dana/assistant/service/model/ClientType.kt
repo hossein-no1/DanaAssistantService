@@ -1,19 +1,13 @@
 package dana.assistant.service.model
 
-import android.util.Log
-
 internal enum class ClientType(val packageName: String) {
 
-    DONE_TV(packageName = "ir.huma.humasuperapp") {
+    DONE_TV(packageName = "ir.huma.humaplay") {
         override fun isDanaSupported(danaVersion: Long, type: ClientScreenType): Boolean {
             return when (type) {
                 ClientScreenType.HOME -> danaVersion >= VersionSupportedNote.DANA_IN_DONETV_HOME
                 ClientScreenType.PLAYER -> danaVersion >= VersionSupportedNote.DANA_IN_DONETV_CONTENT_PLAYER
-                ClientScreenType.CONTENT_DETAIL -> {
-                    val condition = danaVersion >= VersionSupportedNote.DANA_IN_DONETV_CONTENT_DETAIL
-                    Log.i("ClientType", "$danaVersion - $type - $condition")
-                    condition
-                }
+                ClientScreenType.CONTENT_DETAIL -> danaVersion >= VersionSupportedNote.DANA_IN_DONETV_CONTENT_DETAIL
             }
         }
     },
@@ -29,7 +23,6 @@ internal enum class ClientType(val packageName: String) {
     },
     UNKNOWN(packageName = "") {
         override fun isDanaSupported(danaVersion: Long, type: ClientScreenType): Boolean {
-            Log.i("ClientType", "Unknown")
             return false
         }
     };
