@@ -1,33 +1,39 @@
 package dana.assistant.service.model
 
+import dana.assistant.service.commandhandler.CommandHandler
+import dana.assistant.service.commandhandler.ContentDetailCommandHandler
+import dana.assistant.service.commandhandler.HomeCommandHandler
+import dana.assistant.service.commandhandler.PlayerCommandHandler
+
 internal enum class ClientType(val packageName: String) {
 
     DONE_TV(packageName = "ir.huma.humaplay") {
-        override fun isDanaSupported(danaVersion: Long, type: ClientScreenType): Boolean {
+        override fun isDanaSupported(danaVersion: Long, type: CommandHandler): Boolean {
             return when (type) {
-                ClientScreenType.HOME -> danaVersion >= VersionSupportedNote.DANA_IN_DONETV_HOME
-                ClientScreenType.PLAYER -> danaVersion >= VersionSupportedNote.DANA_IN_DONETV_CONTENT_PLAYER
-                ClientScreenType.CONTENT_DETAIL -> danaVersion >= VersionSupportedNote.DANA_IN_DONETV_CONTENT_DETAIL
+                is HomeCommandHandler -> danaVersion >= VersionSupportedNote.DANA_IN_DONETV_HOME
+                is PlayerCommandHandler -> danaVersion >= VersionSupportedNote.DANA_IN_DONETV_PLAYER
+                is ContentDetailCommandHandler -> danaVersion >= VersionSupportedNote.DANA_IN_DONETV_CONTENT_DETAIL
+                else -> false
             }
         }
     },
     DONE_UI(packageName = "ir.huma.android.launcher") {
 
-        override fun isDanaSupported(danaVersion: Long, type: ClientScreenType): Boolean {
+        override fun isDanaSupported(danaVersion: Long, type: CommandHandler): Boolean {
             return when (type) {
-                ClientScreenType.HOME -> danaVersion >= VersionSupportedNote.DANA_IN_DONEUI_HOME
+                is HomeCommandHandler -> danaVersion >= VersionSupportedNote.DANA_IN_DONEUI_HOME
                 else -> false
             }
         }
 
     },
     UNKNOWN(packageName = "") {
-        override fun isDanaSupported(danaVersion: Long, type: ClientScreenType): Boolean {
+        override fun isDanaSupported(danaVersion: Long, type: CommandHandler): Boolean {
             return false
         }
     };
 
-    abstract fun isDanaSupported(danaVersion: Long, type: ClientScreenType): Boolean
+    abstract fun isDanaSupported(danaVersion: Long, type: CommandHandler): Boolean
 
 }
 
