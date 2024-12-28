@@ -3,78 +3,98 @@ package dana.assistant.service.model
 enum class CommandType {
 
     // Player group
-    VolumeUp,
-    VolumeDown,
-    VolumeMute,
-    MediaPlay,
-    MediaPause,
-    MediaNext,
-    MediaPrevious,
-    MediaRewind,
-    MediaFastForward,
-    MediaAudioTrack,
-    MediaChangePosition,
-    MediaChangeQuality,
-    MediaChangeSubtitle,
-    MediaSubtitleIncrease,
-    MediaSubtitleDecrease,
+    MEDIA_PLAY,
+    MEDIA_PAUSE,
+    MEDIA_REWIND,
+    MEDIA_FAST_FORWARD,
+    MEDIA_AUDIO_TRACK,
+    MEDIA_CHANGE_POSITION,
+    MEDIA_CHANGE_QUALITY,
+    MEDIA_CHANGE_SUBTITLE,
+    MEDIA_SUBTITLE_INCREASE,
+    MEDIA_SUBTITLE_DECREASE,
 
     // General group
-    PlayMovie,
-    PlaySerial,
-    PlayMusic,
-    OpenApplication,
-    OpenWifiSetting,
-    OpenBluetoothSetting,
-    OpenLanguageSetting,
-    OpenSetting,
-    OpenProfile,
-    Shutdown,
-    Reboot,
-    BackPress,
-    HomePress,
+    BACK_PRESS,
 
     // Content-Detail group
-    PlayContent,
-    BookmarkContent,
-    LikeContent,
-    DisLikeContent,
+    PLAY_CONTENT,
+    BOOKMARK_CONTENT,
+    LIKE_CONTENT,
+    DISLIKE_CONTENT,
 
-    Unknown
+    // Home group
+    SCROLL,
+    CHANGE_TAB,
+    SELECT_TAB,
+    MOVING,
+
+    Unknown,
+}
+
+enum class Direction {
+    LEFT,
+    RIGHT,
+    UP,
+    DOWN,
+    UNKNOWN,
+}
+
+enum class VerticalDirection {
+    UP,
+    DOWN,
+    UNKNOWN,
+}
+
+enum class MovingDirection {
+    FORWARD,
+    BACKWARD,
+    FIRST,
+    LAST,
+    UNKNOWN,
 }
 
 fun parseCommand(command: String) = when (command) {
-    "VolumeUp" -> CommandType.VolumeUp
-    "VolumeDown" -> CommandType.VolumeDown
-    "VolumeMute" -> CommandType.VolumeMute
-    "MediaPlay" -> CommandType.MediaPlay
-    "MediaPause" -> CommandType.MediaPause
-    "MediaNext" -> CommandType.MediaNext
-    "MediaPrevious" -> CommandType.MediaPrevious
-    "MediaRewind" -> CommandType.MediaRewind
-    "MediaFastForward" -> CommandType.MediaFastForward
-    "MediaAudioTrack" -> CommandType.MediaAudioTrack
-    "MediaChangePosition" -> CommandType.MediaChangePosition
-    "MediaChangeQuality" -> CommandType.MediaChangeQuality
-    "MediaChangeSubtitle" -> CommandType.MediaChangeSubtitle
-    "MediaSubtitleIncrease" -> CommandType.MediaSubtitleIncrease
-    "MediaSubtitleDecrease" -> CommandType.MediaSubtitleDecrease
-    "PlayMovie" -> CommandType.PlayMovie
-    "PlaySerial" -> CommandType.PlaySerial
-    "PlayMusic" -> CommandType.PlayMusic
-    "OpenApplication" -> CommandType.OpenApplication
-    "OpenWifiSetting" -> CommandType.OpenWifiSetting
-    "OpenBluetoothSetting" -> CommandType.OpenBluetoothSetting
-    "OpenLanguageSetting" -> CommandType.OpenLanguageSetting
-    "OpenSetting" -> CommandType.OpenSetting
-    "OpenProfile" -> CommandType.OpenProfile
-    "Shutdown" -> CommandType.Shutdown
-    "Reboot" -> CommandType.Reboot
-    "BackPress" -> CommandType.BackPress
-    "HomePress" -> CommandType.HomePress
-    "PlayContent" -> CommandType.PlayContent
-    "BookmarkContent" -> CommandType.BookmarkContent
-    "LikeContent" -> CommandType.LikeContent
-    "DisLikeContent" -> CommandType.DisLikeContent
+    "MediaPlay" -> CommandType.MEDIA_PLAY
+    "MediaPause" -> CommandType.MEDIA_PAUSE
+    "MediaRewind" -> CommandType.MEDIA_REWIND
+    "MediaFastForward" -> CommandType.MEDIA_FAST_FORWARD
+    "MediaAudioTrack" -> CommandType.MEDIA_AUDIO_TRACK
+    "MediaChangePosition" -> CommandType.MEDIA_CHANGE_POSITION
+    "MediaChangeQuality" -> CommandType.MEDIA_CHANGE_QUALITY
+    "MediaChangeSubtitle" -> CommandType.MEDIA_CHANGE_SUBTITLE
+    "MediaSubtitleIncrease" -> CommandType.MEDIA_SUBTITLE_INCREASE
+    "MediaSubtitleDecrease" -> CommandType.MEDIA_SUBTITLE_DECREASE
+    "BackPress" -> CommandType.BACK_PRESS
+    "PlayContent" -> CommandType.PLAY_CONTENT
+    "BookmarkContent" -> CommandType.BOOKMARK_CONTENT
+    "LikeContent" -> CommandType.LIKE_CONTENT
+    "DisLikeContent" -> CommandType.DISLIKE_CONTENT
+    "Scroll" -> CommandType.SCROLL
+    "ChangeTab" -> CommandType.CHANGE_TAB
+    "SelectTab" -> CommandType.SELECT_TAB
+    "Moving" -> CommandType.MOVING
     else -> CommandType.Unknown
+}
+
+fun parseDirection(direction: String) = when (direction) {
+    "left" -> Direction.LEFT
+    "right" -> Direction.RIGHT
+    "up" -> Direction.UP
+    "down" -> Direction.DOWN
+    else -> Direction.UNKNOWN
+}
+
+fun parseVerticalDirection(direction: String) = when (direction) {
+    "up" -> VerticalDirection.UP
+    "down" -> VerticalDirection.DOWN
+    else -> VerticalDirection.UNKNOWN
+}
+
+fun parseMovieDirection(direction: String) = when (direction) {
+    "forward" -> MovingDirection.FORWARD
+    "backward" -> MovingDirection.BACKWARD
+    "first" -> MovingDirection.FIRST
+    "last" -> MovingDirection.LAST
+    else -> MovingDirection.UNKNOWN
 }

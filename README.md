@@ -1,87 +1,197 @@
 # Dana assistant service
-This service is a mediator between two android application.<br/>
+This service is a mediator between two android applications.<br/>
 With this service, you can open **Dana voice assistant** on your app and receive some commands.
 # How to setup service
-*1.* in the module gradle:
+In the module gradle:
 > `implementation 'com.github.hossein-no1:DanaAssistantService:vx,x,x'`
 
-check the latest release version in github.
+check the latest release version in GitHub.
 
-*2.* create an instance of `DanaService()`
-and use `openAssistant(packageName : String, screenName : String)` function for open Dana overlay.<br/>
-**It's important to send your PackageName for receive data with successfully**
+### Setup `DanaService` in Activity/Fragment
 
-*3.* register service when screen created with this function:<br/>
-`registerService(object : AssistantCallBack)`
+```Kotlin
+class MainActivity : AppCompatActivity() {
 
-*4.* don't forget call `unregisterService()` when screen destroyed.
+    lateinit var danaService: DanaService
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        danaService = DanaService(context = context)
+
+        danaService.registerCommandHandler(
+            commandHandler = object : ContentDetailCommandHandler {
+                override fun onDisLikeContent() {
+                    println("onDisLikeContent")
+                }
+
+                override fun onLikeContent() {
+                    println("onLikeContent")
+                }
+
+                override fun onBookmarkContent() {
+                    println("onBookmarkContent")
+                }
+
+                override fun onPlayContent() {
+                    println("onPlayContent")
+                }
+            }
+        )
+
+        danaService.setupMicReceiver {
+            viewModel.onDanaStartByRemoteControl()
+        }
+        
+        lifecycle.addObserver(danaService)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        lifecycle.addObserver(danaService)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        lifecycle.removeObserver(danaService)
+    }
+}
+```
+
+### Setup `DanaService` in Composable Screen
+
+```Kotlin
+@Composable
+fun MainScreen() {
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val context = LocalContext.current
+    
+    val danaService = remember {
+        DanaService(context = context)
+    }
+    
+    LaunchEffect(Unit) {
+        danaService.registerCommandHandler(
+            commandHandler = object : ContentDetailCommandHandler {
+                override fun onDisLikeContent() {
+                    println("onDisLikeContent")
+                }
+
+                override fun onLikeContent() {
+                    println("onLikeContent")
+                }
+
+                override fun onBookmarkContent() {
+                    println("onBookmarkContent")
+                }
+
+                override fun onPlayContent() {
+                    println("onPlayContent")
+                }
+            }
+        )
+
+        danaService.setupMicReceiver {
+            viewModel.onDanaStartByRemoteControl()
+        }
+    }
+
+    DisposableEffect(lifecycleOwner) {
+        lifecycleOwner.lifecycle.addObserver(danaService)
+
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(danaService)
+        }
+    }
+
+    ....
+
+}
+```
+
+### Setup `DanaService` in ViewModel
+
+```Kotlin
+    private val danaService = DanaService(context = context)
+
+    fun attachToLifecycle(lifecycleOwner: LifecycleOwner) {
+
+        danaService.registerCommandHandler(
+            commandHandler = object : ContentDetailCommandHandler {
+                override fun onDisLikeContent() {
+                    println("onDisLikeContent")
+                }
+
+                override fun onLikeContent() {
+                    println("onLikeContent")
+                }
+
+                override fun onBookmarkContent() {
+                    println("onBookmarkContent")
+                }
+
+                override fun onPlayContent() {
+                    println("onPlayContent")
+                }
+            }
+        )
+
+        danaService.setupMicReceiver {
+            viewModel.onDanaStartByRemoteControl()
+        }
+        
+        lifecycleOwner.lifecycle.addObserver(danaService)
+    }
+
+    fun detachToLifecycle(lifecycleOwner: LifecycleOwner) {
+        lifecycleOwner.lifecycle.removeObserver(danaService)
+    }
+```
+
+For use in an Activity/Fragment or Composeable function, attach and detach the `DanaService` like you would set it up in the two sections above.
 
 # version 1.3.1
 ##### What's happened in this version?
-This commands was supported:
+These commands was supported:
 - add thirteen new command
 - add startup type for better performance
 
-| command               | group | is_internal | argument     | default_value |
-|-----------------------|-------|-------------|--------------|---------------|
-| OpenWifiSetting | General | ✅ | -            | -             |
-| OpenBluetoothSetting | General | ✅ | -            | -             |
-| OpenSetting | General | ✅ | -            | -             |
-| OpenLanguageSetting | General | ✅ | -            | -             |
-| OpenProfile | General | ✅ | -            | -             |
-| Reboot | General | ✅ | -            | -             |
-| Shutdown | General | ✅ | -            | -             |
-| HomePress | General | ✅ | -            | -             |
-| BackPress | General | ✖️ | -            | -             |
-| PlayContent | ContentDetail | ✖️ | -            | -             |
-| BookmarkContent | ContentDetail | ✖️ | -            | -             |
-| LikeContent | ContentDetail | ✖️ | -            | -             |
-| DisLikeContent | ContentDetail | ✖️ | -            | -             |
-
-# version 1.3.0
-##### What's happened in this version?
-This commands was supported:
-- add four new command
-
-| command               | group | is_internal | argument     | default_value |
-|-----------------------|-------|-------------|--------------|---------------|
-| PlayMovie | Generel | ✅ | -            | -             |
-| PlaySerial | General | ✅ | -            | -             |
-| PlayMusic | General | ✅ | -            | -             |
-| OpenApplication | General | ✅ | -            | -             |
+| command               | group | argument     | default_value |
+|-----------------------|-------|--------------|---------------|
+| BackPress | General | -            | -             |
+| PlayContent | ContentDetail | -            | -             |
+| BookmarkContent | ContentDetail | -            | -             |
+| LikeContent | ContentDetail | -            | -             |
+| DisLikeContent | ContentDetail | -            | -             |
 
 # version 1.2.0
 ##### What's happened in this version?
-This commands was supported:
+This command was supported:
 - disable allowbackup
 
 ## Commands version 1.2.0
 
 ##### What's happened in this version?
-This commands was supported:
+These commands was supported:
 - add two new command
 
-| command               | group | is_internal | argument     | default_value |
-|-----------------------|-------|-------------|--------------|---------------|
-| MediaPlay             | Player | ✖️ | -            | -             |
-| MediaPause            | Player | ✖️ | -            | -             |
+| command               | group | argument     | default_value |
+|-----------------------|-------|--------------|---------------|
+| MediaPlay             | Player | -            | -             |
+| MediaPause            | Player | -            | -             |
 
 # version 1.1.0
 ##### What's happened in this version?
-This commands was supported:
+These commands was supported:
 
-| command | group | is_internal | argument     | default_value |
-|---------|-------|-------------|--------------|---------------|
-| VolumeUp              | Player | ✅ | 1 unit 10    | 2             |
-| VolumeDown            | Player | ✅ | 1 unit 10    | 2             |
-| VolumeMute            | Player | ✅ | -            | -             |
-| MediaNext             | Player | ✅ | -            | -             |
-| MediaPrevious         | Player | ✅ | -            | -             |
-| MediaRewind           | Player | ✖️ | 1 unit 36000 | 15            |
-| MediaFastForward      | Player | ✖️ | 1 unit 36000 | 15            |
-| MediaAudioTrack       | Player | ✖️ | -            | -             |
-| MediaChangePosition   | Player | ✖️ | 1 unit 36000 | 0             |
-| MediaChangeQuality    | Player | ✖️ | -            | -             |
-| MediaChangeSubtitle   | Player | ✖️ | -            | -             |
-| MediaSubtitleIncrease | Player | ✖️ | -            | -             |
-| MediaSubtitleDecrease | Player | ✖️ | -            | -             |
+| command | group | argument     | default_value |
+|---------|-------|--------------|---------------|
+| MediaRewind           | Player | 1 unit 36000 | 15            |
+| MediaFastForward      | Player | 1 unit 36000 | 15            |
+| MediaAudioTrack       | Player | -            | -             |
+| MediaChangePosition   | Player | 1 unit 36000 | 0             |
+| MediaChangeQuality    | Player | -            | -             |
+| MediaChangeSubtitle   | Player | -            | -             |
+| MediaSubtitleIncrease | Player | -            | -             |
+| MediaSubtitleDecrease | Player | -            | -             |
