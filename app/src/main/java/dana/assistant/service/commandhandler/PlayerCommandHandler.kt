@@ -9,16 +9,16 @@ interface PlayerCommandHandler : CommandHandler {
     override fun onReceiveCommand(commandType: CommandType, values: List<String>) {
         super.onReceiveCommand(commandType, values)
         when (commandType) {
-            CommandType.MediaPlay -> onMediaPlay()
-            CommandType.MediaPause -> onMediaPause()
-            CommandType.MediaRewind -> onMediaRewind(amount = values[0].toInt())
-            CommandType.MediaFastForward -> onMediaFastForward(amount = values[0].toInt())
-            CommandType.MediaAudioTrack -> onMediaAudioTrack()
-            CommandType.MediaChangePosition -> onMediaChangePosition(amount = values[0].toInt())
-            CommandType.MediaChangeQuality -> onMediaChangeQuality()
-            CommandType.MediaChangeSubtitle -> onMediaChangeSubtitle()
-            CommandType.MediaSubtitleIncrease -> onMediaSubtitleIncrease()
-            CommandType.MediaSubtitleDecrease -> onMediaSubtitleDecrease()
+            CommandType.MEDIA_PLAY -> onMediaPlay()
+            CommandType.MEDIA_PAUSE -> onMediaPause()
+            CommandType.MEDIA_REWIND -> onMediaRewind(amount = values[0].toInt())
+            CommandType.MEDIA_FAST_FORWARD -> onMediaFastForward(amount = values[0].toInt())
+            CommandType.MEDIA_AUDIO_TRACK -> onMediaAudioTrack()
+            CommandType.MEDIA_CHANGE_POSITION -> onMediaChangePosition(amount = values[0].toInt())
+            CommandType.MEDIA_CHANGE_QUALITY -> onMediaChangeQuality()
+            CommandType.MEDIA_CHANGE_SUBTITLE -> onMediaChangeSubtitle()
+            CommandType.MEDIA_SUBTITLE_INCREASE -> onMediaSubtitleIncrease()
+            CommandType.MEDIA_SUBTITLE_DECREASE -> onMediaSubtitleDecrease()
             else -> Unit
         }
     }

@@ -38,7 +38,7 @@ class DanaService(
     }
 
     fun setupMicReceiver(
-        screenName: ClientScreenType = ClientScreenType.Home,
+        screenName: ClientScreenType = ClientScreenType.HOME,
         onOpened: () -> Unit = {}
     ) {
         micReceiver = object : BroadcastReceiver() {
@@ -52,15 +52,15 @@ class DanaService(
     }
 
     fun openAssistant(
-        screenName: ClientScreenType = ClientScreenType.Home,
+        screenName: ClientScreenType = ClientScreenType.HOME,
         onOpened: () -> Unit = {},
     ) {
         if (context.isDanaInstalled()) {
             openDanaByMicrophone(
                 context = context,
-                danaScreenType = DanaScreenType.Overlay,
+                danaScreenType = DanaScreenType.OVERLAY,
                 screenType = screenName,
-                wakeupType = WakeupType.ClickOnObject
+                wakeupType = WakeupType.CLICK_ON_OBJECT
             )
             onOpened()
         } else {
@@ -70,16 +70,16 @@ class DanaService(
     }
 
     fun openExplorer(
-        screenName: ClientScreenType = ClientScreenType.Home,
+        screenName: ClientScreenType = ClientScreenType.HOME,
         onOpened: () -> Unit = {},
     ) {
 
         if (context.isDanaInstalled()) {
             openDanaByMicrophone(
                 context = context,
-                danaScreenType = DanaScreenType.Explorer,
+                danaScreenType = DanaScreenType.EXPLORER,
                 screenType = screenName,
-                wakeupType = WakeupType.ClickOnObject
+                wakeupType = WakeupType.CLICK_ON_OBJECT
             )
             onOpened()
         } else {
@@ -92,7 +92,11 @@ class DanaService(
         assistantReceiver = AssistantBroadcastReceiver(commandHandler)
     }
 
-    fun isDanaSupportedInScreen(screenType: ClientScreenType) =
+    fun getDanaVersion() = context.getDanaVersionCode()
+
+    fun isDanaInstalled() = context.isDanaInstalled()
+
+    fun isDanaSupported(screenType: ClientScreenType) =
         context.isDanaInstalled() &&
                 Util.isDanaSupportedOnClientScreen(context = context, screenType = screenType) &&
                 Util.isDanaSupportedOnDevice()

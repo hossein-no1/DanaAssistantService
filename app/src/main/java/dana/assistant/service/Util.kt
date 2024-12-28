@@ -73,8 +73,8 @@ internal object Util {
     fun openDanaByMicrophone(
         context: Context,
         danaScreenType: DanaScreenType,
-        screenType: ClientScreenType = ClientScreenType.Home,
-        wakeupType: WakeupType = WakeupType.Microphone,
+        screenType: ClientScreenType = ClientScreenType.HOME,
+        wakeupType: WakeupType = WakeupType.MICROPHONE,
     ) {
         if (context.getDanaVersionCode() >= LAST_DANA_VERSION_AFTER_REFACTOR)
             openDanaNewWay(
@@ -152,9 +152,9 @@ internal object Util {
         if (context.isDanaInstalled()) {
             openDanaByMicrophone(
                 context = context,
-                danaScreenType = DanaScreenType.Overlay,
+                danaScreenType = DanaScreenType.OVERLAY,
                 screenType = clientScreenType,
-                wakeupType = WakeupType.Microphone
+                wakeupType = WakeupType.MICROPHONE
             )
             onOpened()
         } else {

@@ -1,14 +1,14 @@
 package dana.assistant.service.model
 
 enum class ClientScreenType(val screen: String) {
-    Home(screen = "home"),
-    ContentDetail(screen = "content_detail"),
-    Player(screen = "player")
+    HOME(screen = "home"),
+    CONTENT_DETAIL(screen = "content_detail"),
+    PLAYER(screen = "player")
 }
 
 fun parseClientScreen(screen: String): ClientScreenType = when (screen) {
-    "home" -> ClientScreenType.Home
-    "content_detail" -> ClientScreenType.ContentDetail
-    "player" -> ClientScreenType.Player
-    else -> ClientScreenType.Home
+    "home" -> ClientScreenType.HOME
+    "content_detail" -> ClientScreenType.CONTENT_DETAIL
+    "player" -> ClientScreenType.PLAYER
+    else -> ClientScreenType.HOME
 }

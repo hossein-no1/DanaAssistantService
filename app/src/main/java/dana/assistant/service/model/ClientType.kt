@@ -5,9 +5,9 @@ internal enum class ClientType(val packageName: String) {
     DONE_TV(packageName = "ir.huma.humasuperapp") {
         override fun isDanaSupported(danaVersion: Long, type: ClientScreenType): Boolean {
             return when (type) {
-                ClientScreenType.Home -> danaVersion >= VersionSupportedNote.DANA_IN_DONETV_HOME
-                ClientScreenType.Player -> danaVersion >= VersionSupportedNote.DANA_IN_DONETV_CONTENT_PLAYER
-                ClientScreenType.ContentDetail -> danaVersion >= VersionSupportedNote.DANA_IN_DONETV_CONTENT_DETAIL
+                ClientScreenType.HOME -> danaVersion >= VersionSupportedNote.DANA_IN_DONETV_HOME
+                ClientScreenType.PLAYER -> danaVersion >= VersionSupportedNote.DANA_IN_DONETV_CONTENT_PLAYER
+                ClientScreenType.CONTENT_DETAIL -> danaVersion >= VersionSupportedNote.DANA_IN_DONETV_CONTENT_DETAIL
             }
         }
     },
@@ -15,7 +15,7 @@ internal enum class ClientType(val packageName: String) {
 
         override fun isDanaSupported(danaVersion: Long, type: ClientScreenType): Boolean {
             return when (type) {
-                ClientScreenType.Home -> danaVersion >= VersionSupportedNote.DANA_IN_DONEUI_HOME
+                ClientScreenType.HOME -> danaVersion >= VersionSupportedNote.DANA_IN_DONEUI_HOME
                 else -> false
             }
         }

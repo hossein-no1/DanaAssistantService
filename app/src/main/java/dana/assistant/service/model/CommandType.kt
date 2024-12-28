@@ -3,19 +3,19 @@ package dana.assistant.service.model
 enum class CommandType {
 
     // Player group
-    MediaPlay,
-    MediaPause,
-    MediaRewind,
-    MediaFastForward,
-    MediaAudioTrack,
-    MediaChangePosition,
-    MediaChangeQuality,
-    MediaChangeSubtitle,
-    MediaSubtitleIncrease,
-    MediaSubtitleDecrease,
+    MEDIA_PLAY,
+    MEDIA_PAUSE,
+    MEDIA_REWIND,
+    MEDIA_FAST_FORWARD,
+    MEDIA_AUDIO_TRACK,
+    MEDIA_CHANGE_POSITION,
+    MEDIA_CHANGE_QUALITY,
+    MEDIA_CHANGE_SUBTITLE,
+    MEDIA_SUBTITLE_INCREASE,
+    MEDIA_SUBTITLE_DECREASE,
 
     // General group
-    BackPress,
+    BACK_PRESS,
 
     // Content-Detail group
     PLAY_CONTENT,
@@ -55,17 +55,17 @@ enum class MovingDirection {
 }
 
 fun parseCommand(command: String) = when (command) {
-    "MediaPlay" -> CommandType.MediaPlay
-    "MediaPause" -> CommandType.MediaPause
-    "MediaRewind" -> CommandType.MediaRewind
-    "MediaFastForward" -> CommandType.MediaFastForward
-    "MediaAudioTrack" -> CommandType.MediaAudioTrack
-    "MediaChangePosition" -> CommandType.MediaChangePosition
-    "MediaChangeQuality" -> CommandType.MediaChangeQuality
-    "MediaChangeSubtitle" -> CommandType.MediaChangeSubtitle
-    "MediaSubtitleIncrease" -> CommandType.MediaSubtitleIncrease
-    "MediaSubtitleDecrease" -> CommandType.MediaSubtitleDecrease
-    "BackPress" -> CommandType.BackPress
+    "MediaPlay" -> CommandType.MEDIA_PLAY
+    "MediaPause" -> CommandType.MEDIA_PAUSE
+    "MediaRewind" -> CommandType.MEDIA_REWIND
+    "MediaFastForward" -> CommandType.MEDIA_FAST_FORWARD
+    "MediaAudioTrack" -> CommandType.MEDIA_AUDIO_TRACK
+    "MediaChangePosition" -> CommandType.MEDIA_CHANGE_POSITION
+    "MediaChangeQuality" -> CommandType.MEDIA_CHANGE_QUALITY
+    "MediaChangeSubtitle" -> CommandType.MEDIA_CHANGE_SUBTITLE
+    "MediaSubtitleIncrease" -> CommandType.MEDIA_SUBTITLE_INCREASE
+    "MediaSubtitleDecrease" -> CommandType.MEDIA_SUBTITLE_DECREASE
+    "BackPress" -> CommandType.BACK_PRESS
     "PlayContent" -> CommandType.PLAY_CONTENT
     "BookmarkContent" -> CommandType.BOOKMARK_CONTENT
     "LikeContent" -> CommandType.LIKE_CONTENT

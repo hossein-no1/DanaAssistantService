@@ -11,7 +11,7 @@ interface CommandHandler {
              * */
     fun onReceiveCommand(commandType: CommandType, values: List<String>) {
         when (commandType) {
-            CommandType.BackPress -> onBackPress()
+            CommandType.BACK_PRESS -> onBackPress()
             else -> Unit
         }
     }
