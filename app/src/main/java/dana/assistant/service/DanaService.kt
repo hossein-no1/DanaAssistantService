@@ -24,7 +24,6 @@ class DanaService(
     internal var assistantReceiver: AssistantBroadcastReceiver? = null
 
     internal lateinit var micReceiver: BroadcastReceiver
-    private var commandListener: CommandHandler? = null
 
     override fun onStart(owner: LifecycleOwner) {
         super.onStart(owner)
@@ -90,7 +89,6 @@ class DanaService(
     }
 
     fun registerCommandHandler(commandHandler: CommandHandler) {
-        this.commandListener = commandHandler
         assistantReceiver = AssistantBroadcastReceiver(commandHandler)
     }
 
@@ -98,13 +96,9 @@ class DanaService(
 
     fun isDanaInstalled() = context.isDanaInstalled()
 
-    fun isDanaSupported() =
-        commandListener?.let {
-            context.isDanaInstalled() &&
-                    Util.isDanaSupportedOnClientScreen(context = context, listenerType = it) &&
-                    Util.isDanaSupportedOnDevice()
-        } ?: run {
-            throw Exception("CommandHandler is not initial. Please first call registerCommandHandler().")
-        }
+    fun isDanaSupported(commandHandler: CommandHandler) =
+        context.isDanaInstalled() &&
+                Util.isDanaSupportedOnClientScreen(context = context, listenerType = commandHandler) &&
+                Util.isDanaSupportedOnDevice()
 
 }
