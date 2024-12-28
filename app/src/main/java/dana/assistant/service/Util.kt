@@ -7,6 +7,7 @@ import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
+import android.util.Log
 import androidx.core.content.ContextCompat
 import dana.assistant.service.model.ClientScreenType
 import dana.assistant.service.model.DanaScreenType
@@ -44,11 +45,19 @@ internal object Util {
         return true
     }
 
-    fun isDanaSupportedOnClientScreen(context: Context, screenType: ClientScreenType) =
-        parseClient(context.packageName).isDanaSupported(
+    fun isDanaSupportedOnClientScreen(context: Context, screenType: ClientScreenType) : Boolean {
+
+        val parsed = parseClient(context.packageName)
+        val isDanaSupported = parsed.isDanaSupported(
             danaVersion = context.getDanaVersionCode(),
             type = screenType
         )
+
+        Log.i("Util" , "${context.packageName} - $screenType - $parsed - $isDanaSupported")
+
+        return isDanaSupported
+
+    }
 
     private fun PackageManager.getPackageInfo(packageName: String): PackageInfo =
         getPackageInfo(packageName, 0)
