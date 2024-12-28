@@ -18,6 +18,6 @@ interface CommandHandler {
     }
 
     fun onBackPress() = Unit
-    fun onError(type: ErrorType)
+    fun onError(type: ErrorType) = Unit
 
 }
