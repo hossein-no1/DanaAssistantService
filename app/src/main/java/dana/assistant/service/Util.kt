@@ -11,7 +11,6 @@ import androidx.core.content.ContextCompat
 import dana.assistant.service.model.ClientScreenType
 import dana.assistant.service.model.DanaScreenType
 import dana.assistant.service.model.WakeupType
-import dana.assistant.service.model.parseClient
 
 internal object Util {
 
@@ -44,11 +43,8 @@ internal object Util {
         return true
     }
 
-    fun isDanaSupportedOnClientScreen(context: Context, screenType: ClientScreenType): Boolean =
-        parseClient(context.packageName).isDanaSupported(
-            danaVersion = context.getDanaVersionCode(),
-            type = screenType
-        )
+    fun isDanaSupportedCommandGroup(context: Context, screenType: ClientScreenType): Boolean =
+        screenType.isDanaSupported(danaVersion = context.getDanaVersionCode())
 
     private fun PackageManager.getPackageInfo(packageName: String): PackageInfo =
         getPackageInfo(packageName, 0)

@@ -97,8 +97,8 @@ class DanaService(
     fun isDanaInstalled() = context.isDanaInstalled()
 
     fun isDanaSupported(screenType: ClientScreenType) =
-        context.isDanaInstalled() &&
-                Util.isDanaSupportedOnClientScreen(context = context, screenType = screenType) &&
+        context.isDanaInstalled()&&
+                Util.isDanaSupportedCommandGroup(context = context, screenType = screenType) &&
                 Util.isDanaSupportedOnDevice()
 
 }
